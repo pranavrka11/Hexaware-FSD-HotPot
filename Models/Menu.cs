@@ -21,6 +21,8 @@ namespace HotPot.Models
         public int RestaurantId { get; set; }
         [ForeignKey("RestaurantId")]
         public Restaurant? Restaurant { get; set; }
+        public ICollection<OrderItem>? OrderItems { get; set; }
+
 
         public Menu()
         {

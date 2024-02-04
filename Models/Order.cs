@@ -21,6 +21,8 @@ namespace HotPot.Models
         public int PartnerId {  get; set; }
         [ForeignKey("PartnerId")]
         public DeliveryPartner? DeliveryPartner { get; set; }
+        public ICollection<OrderItem>? OrderItems { get; set; } 
+
 
         public Order()
         {
