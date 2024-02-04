@@ -8,14 +8,14 @@ namespace HotPot.Models
         public int PartnerId { get; set; }
         public string Name { get; set; } = string.Empty;
         public int Phone { get; set; }
-        public string Email { get; set; } = string.Empty;
+        public string? Email { get; set; } = string.Empty;
 
         public DeliveryPartner()
         {
             PartnerId = 0;
         }
 
-        public DeliveryPartner(int partnerid, string name, int phone, string email)
+        public DeliveryPartner(int partnerid, string name, int phone, string? email)
         {
             PartnerId = partnerid;
             Name = name;
@@ -23,7 +23,7 @@ namespace HotPot.Models
             Email = email;
         }
 
-        public DeliveryPartner(string name, int phone, string email)
+        public DeliveryPartner(string name, int phone, string? email)
         {
             Name = name;
             Phone = phone;

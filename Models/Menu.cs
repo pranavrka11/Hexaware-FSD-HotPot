@@ -10,15 +10,16 @@ namespace HotPot.Models
         public string Name { get; set; } = string.Empty;
         public string Type { get; set; } = string.Empty;
         public float Price { get; set; }
-        public string Description { get; set; } = string.Empty;
-        public string Cuisine { get; set; } = string.Empty;
+        public string? Description { get; set; } = string.Empty;
+        public string? Cuisine { get; set; } = string.Empty;
         public TimeSpan CookingTime {  get; set; }
-        public string TasteInfo { get; set; } = string.Empty;
+        public string? TasteInfo { get; set; } = string.Empty;
+        public string? MenuImage {  get; set; } = string.Empty;
         public int NutritionId { get; set; }
-        [ForeignKey(NutritionId)]
+        [ForeignKey("NutritionId")]
         public NutritionalInfo? NutritionalInfo { get; set; }   
         public int RestaurantId { get; set; }
-        [ForeignKey(RestaurantId)]
+        [ForeignKey("RestaurantId")]
         public Restaurant? Restaurant { get; set; }
 
         public Menu()
@@ -26,7 +27,7 @@ namespace HotPot.Models
             MenuId = 0;
         }
 
-        public Menu(int menuid, string name, string type, float price, string description, string cuisine, TimeSpan cookingTime, string tasteInfo, string nutritionalInfo)
+        public Menu(int menuid, string name, string type, float price, string? description, string? cuisine, TimeSpan cookingTime, string? tasteInfo, string? menuImage)
         {
             MenuId = menuid;
             Name = name;
@@ -36,10 +37,11 @@ namespace HotPot.Models
             Cuisine = cuisine;
             CookingTime = cookingTime;
             TasteInfo = tasteInfo;
-            NutritionalInfo = nutritionalInfo;
+            MenuImage = menuImage;
+            
         }
 
-        public Menu(string name, string type, float price, string description, string cuisine, TimeSpan cookingTime, string tasteInfo, string nutritionalInfo)
+        public Menu(string name, string type, float price, string? description, string? cuisine, TimeSpan cookingTime, string? tasteInfo,string? menuImage)
         {
             Name = name;
             Type = type;
@@ -48,7 +50,7 @@ namespace HotPot.Models
             Cuisine = cuisine;
             CookingTime = cookingTime;
             TasteInfo = tasteInfo;
-            NutritionalInfo = nutritionalInfo;
+            MenuImage = menuImage;
         }
 
         public bool Equals(Menu? other)

@@ -6,17 +6,17 @@ namespace HotPot.Models
     {
         [Key]
         public int NutritionId { get; set; }
-        public float Calories { get; set; }
-        public float Fats { get; set; }
-        public float Proteins { get; set; }
-        public float Carbohydrates { get; set; }
+        public float? Calories { get; set; }
+        public float? Fats { get; set; }
+        public float? Proteins { get; set; }
+        public float? Carbohydrates { get; set; }
 
         public NutritionalInfo()
         {
             NutritionId = 0;
         }
 
-        public NutritionalInfo(int nutritionId, float calories, float fats, float proteins, float carbohydrates)
+        public NutritionalInfo(int nutritionId, float? calories, float? fats, float? proteins, float? carbohydrates)
         {
             NutritionId = nutritionId;
             Calories = calories;
@@ -25,7 +25,7 @@ namespace HotPot.Models
             Carbohydrates = carbohydrates;
         }
 
-        public NutritionalInfo(float calories, float fats, float proteins, float carbohydrates)
+        public NutritionalInfo(float? calories, float? fats, float? proteins, float? carbohydrates)
         {
             Calories = calories;
             Fats = fats;
@@ -35,8 +35,8 @@ namespace HotPot.Models
 
         public bool Equals(NutritionalInfo? other)
         {
-            var payment = other ?? new NutritionalInfo();
-            return this.NutritionId.Equals(NutritionalInfo.NutritionId);
+            var nutritionalInfo = other ?? new NutritionalInfo();
+            return this.NutritionId.Equals(nutritionalInfo.NutritionId);
         }
     }
 }

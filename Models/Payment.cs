@@ -9,10 +9,10 @@ namespace HotPot.Models
         public int PaymentId { get; set; }
         public string PaymentMode { get; set; } = string.Empty;
         public float Amount { get; set; }
-        public string Status { get; set; } = string.Empty;
+        public string? Status { get; set; } = string.Empty;
         public DateTime Date { get; set; }
         public int OrderId { get; set; }
-        [ForeignKey(OrderId)]
+        [ForeignKey("OrderId")]
         public Order? Order { get; set; }
 
         public Payment()
@@ -20,7 +20,7 @@ namespace HotPot.Models
             PaymentId = 0;
         }
 
-        public Payment(int paymentid, string paymentMode, float amount, string status, DateTime date)
+        public Payment(int paymentid, string paymentMode, float amount, string? status, DateTime date)
         {
             PaymentId = paymentid;
             PaymentMode = paymentMode;
@@ -29,7 +29,7 @@ namespace HotPot.Models
             Date = date;
         }
 
-        public Payment(string paymentMode, float amount, string status, DateTime date)
+        public Payment(string paymentMode, float amount, string? status, DateTime date)
         {
             PaymentMode = paymentMode;
             Amount = amount;

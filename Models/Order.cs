@@ -15,11 +15,11 @@ namespace HotPot.Models
         public User? User { get; set; }
 
         public int RestaurantId { get; set; }
-        [ForeignKey(RestaurantId)]
+        [ForeignKey("RestaurantId")]
         public Restaurant? Restaurant { get; set; }
 
         public int PartnerId {  get; set; }
-        [ForeignKey(PartnerId)]
+        [ForeignKey("PartnerId")]
         public DeliveryPartner? DeliveryPartner { get; set; }
 
         public Order()
