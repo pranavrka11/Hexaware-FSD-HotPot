@@ -1,4 +1,5 @@
 ﻿using HotPot.Context;
+using HotPot.Exceptions;
 using HotPot.Interfaces;
 using HotPot.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,11 @@ namespace HotPot.Repositories
             _logger = logger;
         }
 
+        /// <summary>
+        /// Adds a new order to the database.
+        /// </summary>
+        /// <param name="item">The order to add.</param>
+        /// <returns>The added order.</returns>
         public async Task<Order> Add(Order item)
         {
             _context.Orders.Add(item);
@@ -24,6 +30,12 @@ namespace HotPot.Repositories
 
             return item;
         }
+
+        /// <summary>
+        /// Deletes an existing order from the database.
+        /// </summary>
+        /// <param name="key">The ID of the order to delete.</param>
+        /// <returns>The deleted order, if found.</returns>
         public async Task<Order> Delete(int key)
         {
             var order = await GetAsync(key);
@@ -39,6 +51,11 @@ namespace HotPot.Repositories
             return order;
         }
 
+        /// <summary>
+        /// Retrieves an order by its ID.
+        /// </summary>
+        /// <param name="key">The ID of the order to retrieve.</param>
+        /// <returns>The retrieved order, if found.</returns>
         public async Task<Order> GetAsync(int key)
         {
             var orders = await GetAsync();
@@ -52,10 +69,14 @@ namespace HotPot.Repositories
             throw new NoOrderFoundException();
         }
 
+        /// <summary>
+        /// Retrieves all orders from the database, including their associated user, restaurant, delivery partner, and order items.
+        /// </summary>
+        /// <returns>A list of all orders with their related data.</returns>
         public async Task<List<Order>> GetAsync()
         {
             var orders = await _context.Orders
-                .Include(o => o.User)
+                .Include(o => o.Customer)
                 .Include(o => o.Restaurant)
                 .Include(o => o.DeliveryPartner)
                 .Include(o => o.OrderItems)
@@ -63,6 +84,12 @@ namespace HotPot.Repositories
 
             return orders;
         }
+
+        /// <summary>
+        /// Updates an existing order in the database.
+        /// </summary>
+        /// <param name="item">The order to update.</param>
+        /// <returns>The updated order.</returns>
         public async Task<Order> Update(Order item)
         {
             var order = await GetAsync(item.OrderId);
@@ -77,6 +104,11 @@ namespace HotPot.Repositories
 
             return order;
         }
+
+        /// <summary>
+        /// Logs an informational message using the provided logger.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
 
         public void LogInformation(string message)
         {

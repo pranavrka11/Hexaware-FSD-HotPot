@@ -14,7 +14,12 @@ namespace HotPot.Repositories
             _context = context;
             _logger = logger;
         }
-        
+
+        /// <summary>
+        /// Adds a new payment to the database.
+        /// </summary>
+        /// <param name="item">The payment to add.</param>
+        /// <returns>The added payment.</returns>
         public async Task<Payment> Add(Payment item)
         {
             _context.Payments.Add(item);
@@ -24,6 +29,12 @@ namespace HotPot.Repositories
 
             return item;
         }
+
+        /// <summary>
+        /// Deletes an existing payment from the database.
+        /// </summary>
+        /// <param name="key">The ID of the payment to delete.</param>
+        /// <returns>The deleted payment, if found.</returns>
         public async Task<Payment> Delete(int key)
         {
             var payment = await GetAsync(key);
@@ -38,6 +49,12 @@ namespace HotPot.Repositories
 
             return payment;
         }
+
+        /// <summary>
+        /// Retrieves a payment by its ID.
+        /// </summary>
+        /// <param name="key">The ID of the payment to retrieve.</param>
+        /// <returns>The retrieved payment, if found.</returns>
         public async Task<Payment> GetAsync(int key)
         {
             var payments = await GetAsync();
@@ -51,6 +68,10 @@ namespace HotPot.Repositories
             throw new NoPaymentFoundException();
         }
 
+        /// <summary>
+        /// Retrieves all payments from the database, including their associated orders.
+        /// </summary>
+        /// <returns>A list of all payments with their related data.</returns>
         public async Task<List<Payment>> GetAsync()
         {
             var payments = await _context.Payments
@@ -59,6 +80,12 @@ namespace HotPot.Repositories
 
             return payments;
         }
+
+        /// <summary>
+        /// Updates an existing payment in the database.
+        /// </summary>
+        /// <param name="item">The payment to update.</param>
+        /// <returns>The updated payment.</returns>
 
         public async Task<Payment> Update(Payment item)
         {
@@ -75,6 +102,10 @@ namespace HotPot.Repositories
             return payment;
         }
 
+        /// <summary>
+        /// Logs an informational message using the provided logger.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
 
         public void LogInformation(string message)
         {

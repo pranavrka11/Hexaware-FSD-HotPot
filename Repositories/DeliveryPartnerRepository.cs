@@ -1,4 +1,5 @@
 ﻿using HotPot.Context;
+using HotPot.Exceptions;
 using HotPot.Interfaces;
 using HotPot.Models;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,11 @@ namespace HotPot.Repositories
             _logger = logger;
         }
 
+        /// <summary>
+        /// Adds a new delivery partner to the database.
+        /// </summary>
+        /// <param name="item">The delivery partner to add.</param>
+        /// <returns>The added delivery partner.</returns>
         public async Task<DeliveryPartner> Add(DeliveryPartner item)
         {
             _context.DeliveryPartners.Add(item);
@@ -24,6 +30,11 @@ namespace HotPot.Repositories
 
             return item;
         }
+        /// <summary>
+        /// Deletes an existing delivery partner from the database.
+        /// </summary>
+        /// <param name="key">The ID of the delivery partner to delete.</param>
+        /// <returns>The deleted delivery partner, if found.</returns>
         public async Task<DeliveryPartner> Delete(int key)
         {
             var partner = await GetAsync(key);
@@ -38,6 +49,11 @@ namespace HotPot.Repositories
 
             return partner;
         }
+        /// <summary>
+        /// Retrieves a delivery partner by its ID.
+        /// </summary>
+        /// <param name="key">The ID of the delivery partner to retrieve.</param>
+        /// <returns>The retrieved delivery partner, if found.</returns>
         public async Task<DeliveryPartner> GetAsync(int key)
         {
             var partners = await GetAsync();
@@ -51,13 +67,21 @@ namespace HotPot.Repositories
             throw new NoDeliveryPartnerFoundException();
         }
 
+        /// <summary>
+        /// Retrieves all delivery partners from the database.
+        /// </summary>
+        /// <returns>A list of all delivery partners.</returns>
         public async Task<List<DeliveryPartner>> GetAsync()
         {
             var partners = await _context.DeliveryPartners.ToListAsync();
             return partners;
         }
 
-
+        /// <summary>
+        /// Updates an existing delivery partner in the database.
+        /// </summary>
+        /// <param name="item">The delivery partner to update.</param>
+        /// <returns>The updated delivery partner.</returns>
         public async Task<DeliveryPartner> Update(DeliveryPartner item)
         {
             var partner = await GetAsync(item.PartnerId);
@@ -73,6 +97,26 @@ namespace HotPot.Repositories
             return partner;
         }
 
+        /// <summary>
+        /// Retrieves a delivery partner by its name.
+        /// </summary>
+        /// <param name="name">The name of the delivery partner to retrieve.</param>
+        /// <returns>The retrieved delivery partner, if found.</returns>
+        public async Task<DeliveryPartner> GetAsync(string name)
+        {
+            var partners = _context.DeliveryPartners.ToList();
+            var partner = partners.FirstOrDefault(p => p.Name == name);
+            if (partner != null)
+            {
+                return partner;
+            }
+            throw new NoDeliveryPartnerFoundException("No Partner Found with given name");
+        }
+
+        /// <summary>
+        /// Logs an informational message using the provided logger.
+        /// </summary>
+        /// <param name="message">The message to log.</param>
         public void LogInformation(string message)
         {
             _logger.LogInformation(message);
