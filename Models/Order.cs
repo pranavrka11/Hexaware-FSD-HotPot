@@ -10,9 +10,9 @@ namespace HotPot.Models
         public DateTime OrderDate { get; set; }
         public float Amount { get; set; }
         public string Status { get; set; } = string.Empty;
-        public int UserId { get; set; }
-        [ForeignKey("UserId")]
-        public User? User { get; set; }
+        public int CustomerId { get; set; }
+        [ForeignKey("CustomerId")]
+        public Customer? Customer { get; set; }
 
         public int RestaurantId { get; set; }
         [ForeignKey("RestaurantId")]
