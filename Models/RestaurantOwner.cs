@@ -11,6 +11,9 @@ namespace HotPot.Models
         public int RestaurantId { get; set; }
         [ForeignKey("RestaurantId")]
         public Restaurant Restaurant { get; set; }
+        public string UserName { get; set; }
+        [ForeignKey("UserName")]
+        public User? User { get; set; }
 
         public RestaurantOwner()
         {
