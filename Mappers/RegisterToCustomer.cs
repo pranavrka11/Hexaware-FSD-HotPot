@@ -1,5 +1,5 @@
-﻿using HotPot.Models;
-using HotPot.Models.DTO;
+﻿using HotPot.Models.DTO;
+using HotPot.Models;
 
 namespace HotPot.Mappers
 {
