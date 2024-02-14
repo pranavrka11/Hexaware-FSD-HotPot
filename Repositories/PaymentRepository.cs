@@ -1,11 +1,12 @@
 ﻿using HotPot.Context;
+using HotPot.Exceptions;
 using HotPot.Interfaces;
 using HotPot.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace HotPot.Repositories
 {
-    public class PaymentRepository : IRepository<int, Payment>
+    public class PaymentRepository : IRepository<int, string, Payment>
     {
         private readonly HotpotContext _context;
         private readonly ILogger<PaymentRepository> _logger;
@@ -22,8 +23,8 @@ namespace HotPot.Repositories
         /// <returns>The added payment.</returns>
         public async Task<Payment> Add(Payment item)
         {
-            _context.Payments.Add(item);
-            await _context.SaveChangesAsync();
+            _context.Add(item);
+             _context.SaveChanges();
 
             LogInformation($"Payment Added: {item.PaymentId}");
 
@@ -42,12 +43,13 @@ namespace HotPot.Repositories
             if (payment != null)
             {
                 _context.Payments.Remove(payment);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 LogInformation($"Payment Deleted: {payment.PaymentId}");
+                return payment;
             }
-
-            return payment;
+            throw new NoPaymentFoundException();
+            
         }
 
         /// <summary>
@@ -93,8 +95,8 @@ namespace HotPot.Repositories
 
             if (payment != null)
             {
-                _context.Entry(item).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.Entry<Payment>(item).State = EntityState.Modified;
+                _context.SaveChanges();
 
                 LogInformation($"Payment Updated: {item.PaymentId}");
             }
@@ -110,6 +112,11 @@ namespace HotPot.Repositories
         public void LogInformation(string message)
         {
             _logger.LogInformation(message);   
+        }
+
+        public Task<Payment> GetAsync(string key)
+        {
+            throw new NotImplementedException();
         }
     }
 }

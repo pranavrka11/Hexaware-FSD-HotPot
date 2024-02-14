@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotPot.Repositories
 {
-    public class OrderRepository : IRepository<int, Order>
+    public class OrderRepository : IRepository<int, string, Order>
     {
         private readonly HotpotContext _context;
         private readonly ILogger<OrderRepository> _logger;
@@ -23,8 +23,8 @@ namespace HotPot.Repositories
         /// <returns>The added order.</returns>
         public async Task<Order> Add(Order item)
         {
-            _context.Orders.Add(item);
-            await _context.SaveChangesAsync();
+            _context.Add(item);
+             _context.SaveChanges();
 
             LogInformation($"Order Added: {item.OrderId}");
 
@@ -43,12 +43,13 @@ namespace HotPot.Repositories
             if (order != null)
             {
                 _context.Orders.Remove(order);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 LogInformation($"Order Deleted: {order.OrderId}");
+                return order;
             }
-
-            return order;
+            throw new NoOrderFoundException();
+            
         }
 
         /// <summary>
@@ -81,7 +82,6 @@ namespace HotPot.Repositories
                 .Include(o => o.DeliveryPartner)
                 .Include(o => o.OrderItems)
                 .ToListAsync();
-
             return orders;
         }
 
@@ -96,13 +96,14 @@ namespace HotPot.Repositories
 
             if (order != null)
             {
-                _context.Entry(item).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.Entry<Order>(item).State = EntityState.Modified;
+                _context.SaveChanges();
 
                 LogInformation($"Order Updated: {item.OrderId}");
-            }
 
-            return order;
+                return order;
+            }
+            throw new NoOrderFoundException();
         }
 
         /// <summary>
@@ -113,6 +114,11 @@ namespace HotPot.Repositories
         public void LogInformation(string message)
         {
             _logger.LogInformation(message);
+        }
+
+        public Task<Order> GetAsync(string key)
+        {
+            throw new NotImplementedException();
         }
     }
 }

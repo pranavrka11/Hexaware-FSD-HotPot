@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotPot.Repositories
 {
-    public class NutritionalInfoRepository : IRepository<int, NutritionalInfo>
+    public class NutritionalInfoRepository : IRepository<int, string, NutritionalInfo>
     {
         private readonly HotpotContext _context;
         private readonly ILogger<NutritionalInfoRepository> _logger;
@@ -23,8 +23,8 @@ namespace HotPot.Repositories
         /// <returns>The added nutritional information item.</returns>
         public async Task<NutritionalInfo> Add(NutritionalInfo item)
         {
-            _context.NutritionalInfos.Add(item);
-            await _context.SaveChangesAsync();
+            _context.Add(item);
+            _context.SaveChanges();
 
             LogInformation($"Nutritional Info Added: {item.NutritionId}");
 
@@ -43,12 +43,13 @@ namespace HotPot.Repositories
             if (nutritionalInfo != null)
             {
                 _context.NutritionalInfos.Remove(nutritionalInfo);
-                await _context.SaveChangesAsync();
+                 _context.SaveChanges();
 
                 LogInformation($"Nutritional Info Deleted: {nutritionalInfo.NutritionId}");
+                return nutritionalInfo;
             }
-
-            return nutritionalInfo;
+            throw new Exception();
+            
         }
 
         /// <summary>
@@ -75,7 +76,7 @@ namespace HotPot.Repositories
         /// <returns>A list of all nutritional information items.</returns>
         public async Task<List<NutritionalInfo>> GetAsync()
         {
-            var nutritionalInfos = await _context.NutritionalInfos.ToListAsync();
+            var nutritionalInfos = _context.NutritionalInfos.ToList();
             return nutritionalInfos;
         }
 
@@ -90,13 +91,14 @@ namespace HotPot.Repositories
 
             if (nutritionalInfo != null)
             {
-                _context.Entry(item).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.Entry<NutritionalInfo>(item).State = EntityState.Modified;
+                _context.SaveChanges();
 
                 LogInformation($"Nutritional Info Updated: {item.NutritionId}");
+                return nutritionalInfo;
             }
-
-            return nutritionalInfo;
+            throw new Exception();
+            
         }
 
         /// <summary>
@@ -106,6 +108,11 @@ namespace HotPot.Repositories
         public void LogInformation(string message)
         {
             _logger.LogInformation(message);
+        }
+
+        public Task<NutritionalInfo> GetAsync(string key)
+        {
+            throw new NotImplementedException();
         }
     }
 }

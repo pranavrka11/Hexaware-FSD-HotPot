@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotPot.Repositories
 {
-    public class OrderItemRepository : IRepository<(int OrderId, int MenuId), OrderItem>
+    public class OrderItemRepository : IRepository<(int OrderId, int MenuId), string, OrderItem>
     {
         private readonly HotpotContext _context;
         private readonly ILogger<OrderItemRepository> _logger;
@@ -23,8 +23,8 @@ namespace HotPot.Repositories
         /// <returns>The added order item.</returns>
         public async Task<OrderItem> Add(OrderItem item)
         {
-            _context.OrderItems.Add(item);
-            await _context.SaveChangesAsync();
+            _context.Add(item);
+            _context.SaveChanges();
 
             LogInformation($"Order Item Added: OrderId={item.OrderId}, MenuId={item.MenuId}");
 
@@ -43,12 +43,13 @@ namespace HotPot.Repositories
             if (orderItem != null)
             {
                 _context.OrderItems.Remove(orderItem);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 LogInformation($"Order Item Deleted: OrderId={orderItem.OrderId}, MenuId={orderItem.MenuId}");
+                return orderItem;
             }
 
-            return orderItem;
+            throw new NoOrderItemFoundException();
         }
 
         /// <summary>
@@ -58,9 +59,9 @@ namespace HotPot.Repositories
         /// <returns>The retrieved order item, if found.</returns>
         public async Task<OrderItem> GetAsync((int OrderId, int MenuId) key)
         {
-            var orderItem = await _context.OrderItems
+            var orderItem = _context.OrderItems
                 .Where(oi => oi.OrderId == key.OrderId && oi.MenuId == key.MenuId)
-                .FirstOrDefaultAsync();
+                .FirstOrDefault();
 
             if (orderItem != null)
             {
@@ -82,6 +83,7 @@ namespace HotPot.Repositories
                 .Include(oi => oi.Menu)
                 .ToListAsync();
 
+
             return orderItems;
         }
 
@@ -96,13 +98,14 @@ namespace HotPot.Repositories
 
             if (orderItem != null)
             {
-                _context.Entry(item).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.Entry<OrderItem>(item).State = EntityState.Modified;
+                 _context.SaveChanges();
 
                 LogInformation($"Order Item Updated: OrderId={item.OrderId}, MenuId={item.MenuId}");
+                return orderItem;
             }
-
-            return orderItem;
+            throw new NoOrderItemFoundException();
+            
         }
 
 
@@ -116,5 +119,9 @@ namespace HotPot.Repositories
             _logger.LogInformation(message);
         }
 
+        public Task<OrderItem> GetAsync(string key)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

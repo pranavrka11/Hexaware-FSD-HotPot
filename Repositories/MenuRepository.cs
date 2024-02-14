@@ -7,10 +7,10 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace HotPot.Repositories
 {
-    public class MenuRepository : IRepository<int, Menu>
+    public class MenuRepository : IRepository<int, string, Menu>
     {
-        private readonly HotpotContext _context;
-        private readonly ILogger<MenuRepository> _logger;
+        readonly HotpotContext _context;
+        readonly ILogger<MenuRepository> _logger;
         public MenuRepository(HotpotContext context, ILogger<MenuRepository> logger) 
         {
             _context = context;
@@ -24,8 +24,8 @@ namespace HotPot.Repositories
         /// <returns>The added menu item.</returns>
         public async Task<Menu> Add(Menu item)
         {
-            _context.Menus.Add(item);
-            await _context.SaveChangesAsync();
+            _context.Add(item);
+            _context.SaveChanges();
             LogInformation($"Menu Added: {item.MenuId}");
             return item;
         }
@@ -40,8 +40,8 @@ namespace HotPot.Repositories
             var menu = await GetAsync(key);
             if (menu != null)
             {
-                _context.Menus.Remove(menu);
-                await _context.SaveChangesAsync();
+                _context.Remove(menu);
+                _context.SaveChanges();
                 LogInformation($"Menu deleted: {menu.MenuId}");
                 return menu;
             }
@@ -71,9 +71,9 @@ namespace HotPot.Repositories
         public async Task<List<Menu>> GetAsync()
         {
             var menus = await _context.Menus
-                .Include(m => m.NutritionalInfo)
-                .Include(m => m.Restaurant)
-                .ToListAsync();
+                 .Include(m => m.NutritionalInfo)
+                 .Include(m => m.Restaurant)
+                 .ToListAsync();
             LogInformation("Menu items retrieved successfully.");
             return menus;
         }
@@ -88,8 +88,8 @@ namespace HotPot.Repositories
             var menu = await GetAsync(item.MenuId);
             if (menu != null)
             {
-                _context.Entry(item).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.Entry<Menu>(item).State = EntityState.Modified;
+                _context.SaveChanges();
                 LogInformation($"Menu Updated: {item.MenuId}");
             }
             return menu;

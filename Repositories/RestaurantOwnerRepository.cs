@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotPot.Repositories
 {
-    public class RestaurantOwnerRepository : IRepository<int, RestaurantOwner>
+    public class RestaurantOwnerRepository : IRepository<int, string, RestaurantOwner>
     {
         private readonly HotpotContext _context;
         private readonly ILogger<RestaurantOwnerRepository> _logger;
@@ -19,8 +19,8 @@ namespace HotPot.Repositories
 
         public async Task<RestaurantOwner> Add(RestaurantOwner item)
         {
-            _context.RestaurantOwners.Add(item);
-            await _context.SaveChangesAsync();
+            _context.Add(item);
+            _context.SaveChanges();
             LogInformation($"Restaurant Owner Added: {item.OwnerId}");
             return item;
         }
@@ -31,16 +31,17 @@ namespace HotPot.Repositories
             if (owner != null)
             {
                 _context.RestaurantOwners.Remove(owner);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
                 LogInformation($"Restaurant Owner Deleted: {owner.OwnerId}");
                 return owner;
             }
-            return null;
+            throw new Exception();
         }
 
         public async Task<RestaurantOwner> GetAsync(int key)
         {
-            var owner = await _context.RestaurantOwners.FindAsync(key);
+            var owners = await GetAsync();
+            var owner = owners.FirstOrDefault(o=> o.OwnerId == key);
             if (owner != null)
             {
                 return owner;
@@ -50,7 +51,7 @@ namespace HotPot.Repositories
 
         public async Task<List<RestaurantOwner>> GetAsync()
         {
-            var owners = await _context.RestaurantOwners.ToListAsync();
+            var owners = _context.RestaurantOwners.ToList();
             LogInformation("Restaurant Owners retrieved successfully.");
             return owners;
         }
@@ -60,11 +61,12 @@ namespace HotPot.Repositories
             var owner = await GetAsync(item.OwnerId);
             if (owner != null)
             {
-                _context.Entry(item).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.Entry<RestaurantOwner>(item).State = EntityState.Modified;
+                _context.SaveChanges();
                 LogInformation($"Restaurant Owner Updated: {item.OwnerId}");
+                return owner;
             }
-            return owner;
+            throw new NoRestaurantOwnerFoundException();
         }
 
         public async Task<RestaurantOwner> GetAsync(string name)

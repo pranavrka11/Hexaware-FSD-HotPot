@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HotPot.Repositories
 {
-    public class DeliveryPartnerRepository : IRepository<int, DeliveryPartner>
+    public class DeliveryPartnerRepository : IRepository<int, string, DeliveryPartner>
     {
         private readonly HotpotContext _context;
         private readonly ILogger<DeliveryPartnerRepository> _logger;
@@ -23,8 +23,8 @@ namespace HotPot.Repositories
         /// <returns>The added delivery partner.</returns>
         public async Task<DeliveryPartner> Add(DeliveryPartner item)
         {
-            _context.DeliveryPartners.Add(item);
-            await _context.SaveChangesAsync();
+            _context.Add(item);
+            _context.SaveChanges();
 
             LogInformation($"Delivery Partner Added: {item.PartnerId}");
 
@@ -42,12 +42,13 @@ namespace HotPot.Repositories
             if (partner != null)
             {
                 _context.DeliveryPartners.Remove(partner);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
                 LogInformation($"Delivery Partner Deleted: {partner.PartnerId}");
+                return partner;
             }
-
-            return partner;
+            return null;
+            
         }
         /// <summary>
         /// Retrieves a delivery partner by its ID.
@@ -73,7 +74,7 @@ namespace HotPot.Repositories
         /// <returns>A list of all delivery partners.</returns>
         public async Task<List<DeliveryPartner>> GetAsync()
         {
-            var partners = await _context.DeliveryPartners.ToListAsync();
+            var partners = _context.DeliveryPartners.ToList();
             return partners;
         }
 
@@ -88,8 +89,8 @@ namespace HotPot.Repositories
 
             if (partner != null)
             {
-                _context.Entry(item).State = EntityState.Modified;
-                await _context.SaveChangesAsync();
+                _context.Entry<DeliveryPartner>(item).State = EntityState.Modified;
+                _context.SaveChanges();
 
                 LogInformation($"Delivery Partner Updated: {item.PartnerId}");
             }
