@@ -1,10 +1,11 @@
 ﻿using HotPot.Exceptions;
-using HotPot.Interfaces;
-using HotPot.Models;
 using HotPot.Models.DTO;
-using Microsoft.AspNetCore.Authorization;
+using HotPot.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using HotPot.Services;
+using HotPot.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HotPot.Controllers
 {
@@ -12,163 +13,238 @@ namespace HotPot.Controllers
     [ApiController]
     public class CustomerController : ControllerBase
     {
-        private readonly ICustomerServices _services;
+        private readonly ICustomerUserService _customerUserService;
         private readonly ILogger<CustomerController> _logger;
 
-        public CustomerController(ICustomerServices services, ILogger<CustomerController> logger)
+        public CustomerController(ICustomerUserService customerUserService, ILogger<CustomerController> logger)
         {
-            _services = services;
+            _customerUserService = customerUserService;
             _logger = logger;
         }
 
-        [Route("LogIn")]
-        [HttpPost]
-        public async Task<ActionResult<LoginUserDTO>> CustomerLogin(LoginUserDTO loginUser)
+        // Address Endpoints
+
+        [HttpPost("address")]
+        public async Task<IActionResult> AddCustomerAddress(CustomerAddress customerAddress)
         {
             try
             {
-                loginUser = await _services.LogIn(loginUser);
-                return loginUser;
+                var addedAddress = await _customerUserService.AddCustomerAddress(customerAddress);
+                return Ok(addedAddress);
             }
-            catch(InvalidUserException e)
+            catch (Exception ex)
             {
-                _logger.LogCritical(e.Message);
-                return Unauthorized("Invalid username or password");
+                _logger.LogError($"Error adding customer address: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [Route("Register")]
-        [HttpPost]
-        public async Task<LoginUserDTO> CustomerRegistration(RegisterCustomerDTO registerCustomer)
-        {
-            var result = await _services.RegisterCustomer(registerCustomer);
-            return result;
-        }
-
-        //[Authorize(Roles ="Customer")]
-        [Route("GetRestaurantsByCity")]
-        [HttpGet]
-        public async Task<ActionResult<List<Restaurant>>> GetRestaurantsByCity(string city)
+        [HttpPut("address/{addressId}")]
+        public async Task<IActionResult> UpdateCustomerAddress(int addressId, CustomerAddressUpdateDTO addressUpdateDto)
         {
             try
             {
-                var result = await _services.GetRestaurantsByCity(city);
-                return result;
+                var updatedAddress = await _customerUserService.UpdateCustomerAddress(addressId, addressUpdateDto);
+                return Ok(updatedAddress);
             }
-            catch(CityNotFoundException e)
+            catch (NoCustomerAddressFoundException ex)
             {
-                _logger.LogCritical(e.Message);
-                return NotFound(e.Message);
+                return NotFound(ex.Message);
             }
-            catch (RestaurantNotFoundException e)
+            catch (Exception ex)
             {
-                _logger.LogCritical(e.Message);
-                return NotFound(e.Message);
+                _logger.LogError($"Error updating customer address: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [Route("GetRestaurantByName")]
-        [HttpGet]
-        public async Task<ActionResult<Restaurant>> GetRestaurantByName(string name)
+        [Authorize(Roles = "RestaurantOwner")]
+        [HttpGet("address/{customerId}")]
+        public async Task<IActionResult> ViewCustomerAddressByCustomerId(int customerId)
         {
             try
             {
-                var restaurant = await _services.GetRestaurantByName(name);
-                return restaurant;
+                var customerAddress = await _customerUserService.ViewCustomerAddressByCustomerId(customerId);
+                return Ok(customerAddress);
             }
-            catch (RestaurantNotFoundException e)
+            catch (NoCustomerAddressFoundException ex)
             {
-                _logger.LogCritical(e.Message);
-                return NotFound("Can't find the restaurant you're looking for");
+                _logger.LogError(ex.Message);
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error occurred while fetching customer address for ID {customerId}: {ex.Message}");
+                return StatusCode(500, "Internal Server Error");
             }
         }
 
-        [Route("GetMenuByRestaurant")]
-        [HttpGet]
-        public async Task<ActionResult<List<Menu>>> GetMenuByRestaurant(int restaurantId)
+
+        // Review Endpoints
+
+        [HttpPost("review")]
+        public async Task<IActionResult> AddCustomerReview(CustomerReview customerReview)
         {
             try
             {
-                var result = await _services.GetMenuByRestaurant(restaurantId);
-                return result;
+                var addedReview = await _customerUserService.AddCustomerReview(customerReview);
+                return Ok(addedReview);
             }
-            catch (NoMenuAvailableException e)
+            catch (Exception ex)
             {
-                _logger.LogCritical(e.Message);
-                return NotFound("No Menu available to show at the moment");
+                _logger.LogError($"Error adding customer review: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [Route("AddToCart")]
-        [HttpPost]
-        public async Task<CartMenuDTO> AddToCart(int userId, int menuItem)
-        {
-            var cart=await _services.AddToCart(userId, menuItem);
-            return cart;
-        }
-
-        [Route("ViewCart")]
-        [HttpGet]
-        public async Task<ActionResult<List<CartMenuDTO>>> GetCarts(int userId)
+        [HttpGet("review/{customerReviewId}")]
+        public async Task<IActionResult> ViewCustomerReview(int customerReviewId)
         {
             try
             {
-                var carts = await _services.GetCarts(userId);
-                return carts;
+                var review = await _customerUserService.ViewCustomerReview(customerReviewId);
+                return Ok(review);
             }
-            catch(EmptyCartException e)
+            catch (NoCustomerReviewFoundException ex)
             {
-                _logger.LogCritical(e.Message);
-                return NotFound("Cart is empty");
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error retrieving customer review: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
 
-        [Route("IncreaseCartItemQuantity")]
-        [HttpPut]
-        public Task<Cart> IncreaseCartItemQuantity(int cartId)
-        {
-            var cart=_services.IncreaseCartItemQuantity(cartId);
-            return cart;
-        }
-
-        [Route("DecreaseCartItemQuantity")]
-        [HttpPut]
-        public Task<Cart> DecreaseCartItemQuantity(int cartId)
-        {
-            var cart = _services.DecreaseCartItemQuantity(cartId);
-            return cart;
-        }
-
-        [Route("PlaceOrderForOne")]
-        [HttpPost]
-        public Task<OrderMenuDTO> PlaceOrderForOne(int cartId, string paymentMode)
-        {
-            var order = _services.PlaceOrderForOne(cartId, paymentMode);
-            return order;
-        }
-
-        [Route("PlaceOrderForAll")]
-        [HttpPost]
-        public Task<OrderMenuDTO> PlaceOrderForAll(int customerId,  string paymentMode)
-        {
-            var order = _services.PlaceOrder(customerId, paymentMode);
-            return order;
-        }
-
-        [Route("ViewOrderStatus")]
-        [HttpGet]
-        public async Task<ActionResult<OrderMenuDTO>> ViewOrderStatus(int orderId)
+        [HttpPut("review")]
+        public async Task<IActionResult> UpdateCustomerReviewText(CustomerReviewUpdateDTO reviewUpdateDTO)
         {
             try
             {
-                var orderStatus = await _services.ViewOrderStatus(orderId);
-                return orderStatus;
+                var updatedReview = await _customerUserService.UpdateCustomerReviewText(reviewUpdateDTO);
+                return Ok(updatedReview);
             }
-            catch(OrdersNotFoundException e)
+            catch (NoCustomerReviewFoundException ex)
             {
-                _logger.LogCritical(e.Message);
-                return NotFound(e.Message);
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error updating customer review: {ex.Message}");
+                return StatusCode(500, "Internal server error");
             }
         }
+
+        [HttpDelete("review/{reviewId}")]
+        public async Task<IActionResult> DeleteCustomerReview(int reviewId)
+        {
+            try
+            {
+                var deletedReview = await _customerUserService.DeleteCustomerReview(reviewId);
+                return Ok(deletedReview);
+            }
+            catch (NoCustomerReviewFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error deleting customer review: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        // Menu Endpoints
+
+        [HttpGet("menu")]
+        public async Task<IActionResult> ViewMenu()
+        {
+            try
+            {
+                var menuItems = await _customerUserService.ViewMenu();
+                return Ok(menuItems);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error retrieving menu: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("menu/search")]
+        public async Task<IActionResult> SearchMenu([FromQuery] string query)
+        {
+            try
+            {
+                var matchingMenuItems = await _customerUserService.SearchMenu(query);
+                return Ok(matchingMenuItems);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error searching menu: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("menu/filter/price")]
+        public async Task<IActionResult> FilterMenuByPriceRange([FromQuery] float minPrice, [FromQuery] float maxPrice)
+        {
+            try
+            {
+                var filteredMenuItems = await _customerUserService.FilterMenuByPriceRange(minPrice, maxPrice);
+                return Ok(filteredMenuItems);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error filtering menu by price range: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("menu/filter/type")]
+        public async Task<IActionResult> FilterMenuByType([FromQuery] string type)
+        {
+            try
+            {
+                var filteredMenuItems = await _customerUserService.FilterMenuByType(type);
+                return Ok(filteredMenuItems);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error filtering menu by type: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("menu/filter/restaurant")]
+        public async Task<IActionResult> FilterMenuByRestaurant([FromQuery] int restaurantId)
+        {
+            try
+            {
+                var filteredMenuItems = await _customerUserService.FilterMenuByRestaurant(restaurantId);
+                return Ok(filteredMenuItems);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error filtering menu by restaurant: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("menu/filter/cuisine")]
+        public async Task<IActionResult> FilterMenuByCuisine([FromQuery] string cuisine)
+        {
+            try
+            {
+                var filteredMenuItems = await _customerUserService.FilterMenuByCuisine(cuisine);
+                return Ok(filteredMenuItems);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error filtering menu by cuisine: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
     }
 }
