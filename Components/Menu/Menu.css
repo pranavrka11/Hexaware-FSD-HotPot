@@ -1,0 +1,409 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+
+.container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    flex-basis: 200px;
+}
+nav {
+    flex-basis: auto;
+}
+.logo a{
+    font-size: 1.6rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+nav li {
+    margin-right: 20px;
+}
+  
+nav a {
+    color: #fff;
+    text-decoration: none;
+}
+  
+
+main {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.menu-container{
+    display: flex;
+    flex-direction: column;
+}
+#menu-categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+.categories {
+    display: flex;
+    justify-content: center;
+}
+
+.category-btn {
+    padding: 10px 20px;
+    margin: 0 10px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+}
+
+.category-btn:hover {
+    background-color: #2980b9;
+}
+
+#menu-listings {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.product-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    width: 100%;
+    max-width: 300px;
+    margin-bottom: 20px;
+}
+
+.product-card:hover {
+    transform: scale(1.05);
+}
+
+.product-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+}
+
+.product-card h3 {
+    margin: 10px 0;
+    font-size: 1.2em;
+    color: #333;
+}
+
+.product-card p {
+    margin: 0;
+    color: #555;
+    font-size: 0.9em;
+}
+
+#search {
+    flex-basis: 200px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
+    color: #000;
+}
+
+@media only screen and (max-width: 768px) {
+    main {
+        flex-direction: column;
+        min-height: 100vh;
+    }
+
+    #menu-listings {
+        width: 100%;
+    }
+
+    #menu-categories{
+        flex-direction: column;
+    }
+    .categories {
+        margin-top: 20px;
+        flex-wrap: wrap;
+    }
+    .category-btn{
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    .home-header .container #search{
+        flex-direction: column;
+    }
+
+    .logo{
+        flex-basis: 100%;
+        margin-bottom: 20px;
+    }
+    #search {
+        flex-basis: 100%;
+        margin-top: 20px; 
+    }
+    nav {
+        flex-basis: 100%;
+    }
+    nav ul{
+        flex-wrap: wrap;
+    }
+    nav li{
+        width: 100%;
+        margin: 0;
+    }
+    nav a{
+        padding: 10px;
+        border-bottom: 1px solid #444;
+    }
+}
+
+/* Searched items styling */
+/* Apply styles for the search bar container */
+.search-bar-container {
+    position: relative; /* Change from absolute to relative */
+    margin-top: 0; /* Add margin-top to create space between the header content */
+    margin-right: 20px; /* Add margin-right to create space between the container edge and search bar */
+    float: right; /* Float the search bar to the right */
+}
+/* Apply styles for the search bar input */
+.search-bar-container input {
+    width: 200px;
+    padding: 5px;
+    margin-right: 5px;
+}
+
+/* Apply styles for the search button */
+.search-bar-container button {
+    padding: 5px 10px;
+    background-color: #007bff; /* Blue color for contrast */
+    color: #fff; /* White text color for contrast */
+    border: none;
+    cursor: pointer;
+}
+
+/* Apply styles to change button appearance on hover */
+.search-bar-container button:hover {
+    background-color: #0056b3; /* Darker blue color on hover */
+}
+
+
+/* Apply styles for the container of searched items */
+.searched-items-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+/* Apply styles for each searched item */
+.searched-item {
+    width: 200px; /* Adjust width as needed */
+    margin: 10px;
+    text-align: center;
+}
+
+/* Apply styles for the images within searched items */
+.searched-item img {
+    width: 100%; /* Ensures images fill their containers */
+    height: 280px; /* Adjust height as needed */
+    object-fit: cover; /* Ensures images maintain aspect ratio */
+}
+
+/* Additional styling for text content */
+.searched-item h3,
+.searched-item p {
+    margin: 5px 0;
+}
+
+
+/* carousel styling */
+.carousel-controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.control-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.menu-item {
+    text-align: center;
+    padding: 20px;
+}
+
+.menu-item img {
+    width: 100%;
+    height: 300px; /* Set a fixed height for uniformity */
+    object-fit: cover; /* Maintain aspect ratio and cover the entire container */
+}
+
+.menu-item h3 {
+    margin-top: 10px;
+    font-size: 1.2em;
+}
+
+.menu-item p {
+    margin-top: 5px;
+    font-size: 1em;
+}
+
+.add-cart {
+    background-color: green;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+}
+
+.add-cart:hover {
+    background-color: darkgreen;
+}
+
+
+/* footer-section-styling */
+
+.myfooter{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #111;
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.footer-brand{
+    margin-top: 50px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-brand a{
+    color: white;
+    text-decoration: none;
+    transition: 0.5s;
+    opacity: 0.7;
+}
+
+.footer-brand a:hover{
+    opacity: 1.1;
+}
+
+.footer-container{
+    padding: 30px 30px 20px;
+}
+
+.social-icons{
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons a{
+    background-color: #fff;
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 50px;
+}
+
+.social-icons i{
+    font-size: 2em;
+    color: #000;
+    opacity: 0.9;
+}
+
+.social-icons a:hover{
+    background-color: #111;
+    transition: 0.5s;
+}
+
+.social-icons a:hover i{
+    color: aliceblue;
+    transition: 0.5s;
+}
+
+.footer-nav{
+    margin: 30px 0;
+}
+
+.footer-nav ul{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.footer-nav ul a{
+    color: white;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.3em;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footer-nav ul a:hover{
+    opacity: 1;
+}
+
+.footer-copyright{
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-copyright p{
+    color: white;
+}
+
+@media screen and (max-width:769px) {
+    .footer-nav ul{
+        flex-direction: column;
+    }
+
+    .footer-nav ul li{
+        width: 100%;
+        text-align: center;
+        margin: 10px;
+    }
+}
