@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import './RestaurantOwner.css';
+// import './RestaurantOwner.css';
+import './Registration.css';
 
 function Registration() {
   const [isLoginFormDisplayed, setIsLoginFormDisplayed] = useState(false);
