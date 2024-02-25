@@ -8,6 +8,7 @@ import MenuHeader from './Components/Menu/MenuHeader';
 import MenuCategories from './Components/Menu/MenuCategories';
 import Menu from './Components/Menu/Menu';
 import Profile from './Components/Profile/Profile';
+import OwnerProfile from './Components/OwnerProfile/OwnerProfile';
 
 
 
@@ -25,10 +26,12 @@ function App() {
 
       {/* <MenuHeader/> */}
       {/* <MenuCategories /> */}
-      {/* <Menu />
-      <RegistrationFooter /> */}
+      {/* <Menu /> */}
+      {/* <RegistrationFooter /> */}
 
-      <Profile />
+      {/* <Profile /> */}
+
+      <OwnerProfile />
     </div>
   );
 }
