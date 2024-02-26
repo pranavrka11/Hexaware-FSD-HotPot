@@ -29,9 +29,9 @@ function App() {
       {/* <Menu /> */}
       {/* <RegistrationFooter /> */}
 
-      {/* <Profile /> */}
+      <Profile />
 
-      <OwnerProfile />
+      {/* <OwnerProfile /> */}
     </div>
   );
 }

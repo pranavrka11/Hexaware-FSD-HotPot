@@ -24,13 +24,13 @@ const Profile = () => {
 
   return (
     <div className="page-container">
+      <div className="cards-container">
       <div className="card">
         <div className="imgbox">
           {/* You can include user avatar here if available */}
           <img
             src="UserProfile.jpg"
             alt="User Avatar"
-            style={{ maxWidth: '100%', maxHeight: '130%' }} // Added maxWidth and maxHeight properties
           />
         </div>
         <div className="content">
@@ -39,6 +39,8 @@ const Profile = () => {
           <p>Phone: {userDetails.phone}</p>
           <p>Username: {userDetails.userName}</p>
         </div>
+        <button className="edit-button">Edit</button> {/* Edit button */}
+
       </div>
 
       <div className="card">
@@ -47,7 +49,6 @@ const Profile = () => {
           <img
             src="addressLogo.jpg"
             alt="Address Image"
-            style={{ maxWidth: '100%', maxHeight: '130%' }} // Added maxWidth and maxHeight properties
           />
         </div>
         <div className="content">
@@ -58,18 +59,14 @@ const Profile = () => {
           <p>Locality: {userAddress.locality}</p>
           <p>Landmark: {userAddress.landMark}</p>
         </div>
+        <button className="edit-button">Edit</button> {/* Edit button */}
+
       </div>
-
-      <div className="card">
-        <div className="imgbox">
-          {/* You can include order image here if available */}
-          <img
-            src="orderHistory.png"
-            alt="Order Image"
-            style={{ maxWidth: '100%', maxHeight: '130%' }} // Added maxWidth and maxHeight properties
-
-          />
-        </div>
+    </div>
+      
+      {/* Horizontal wide card for order history */}
+      <div className="horizontal-card ">
+       
         <div className="content">
           <h2>Order History</h2>
           <ul>
