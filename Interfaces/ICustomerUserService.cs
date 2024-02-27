@@ -23,5 +23,13 @@ namespace HotPot.Interfaces
         public Task<List<Menu>> FilterMenuByType(string type);
         public Task<List<Menu>> FilterMenuByRestaurant(int restaurantId);
         public Task<List<Menu>> FilterMenuByCuisine(string cuisine);
+
+        //Restaurant layer
+        public Task<List<Restaurant>> ViewRestaurants();
+
+        //Order Layer
+        public Task<List<Order>> ViewOrders();
+        public Task<List<Payment>> ViewPayments();
+        public Task<Order> UpdateOrderStatus(int orderId, string newStatus);
     }
 }
