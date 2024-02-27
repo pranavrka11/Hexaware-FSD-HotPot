@@ -1,53 +1,67 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './OwnerProfile.css'; // Importing the CSS file
 
 const OwnerProfile = () => {
   const [activeTab, setActiveTab] = useState('orders');
+  const [orders, setOrders] = useState([]);
+  const [payments, setPaymnets] = useState([]);
+  const [orderStatuses, setOrderStatuses] = useState([]);
+
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
   };
 
-    // Sample order data
-  const orders = [
-    {
-      id: 1,
-      date: '2024-02-24',
-      amount: 50.99,
-      status: 'Pending',
-      customer: 'John Doe',
-      deliveryPartner: 'Delivery Express'
-    },
-    {
-      id: 2,
-      date: '2024-02-23',
-      amount: 35.75,
-      status: 'Delivered',
-      customer: 'Jane Smith',
-      deliveryPartner: 'Swift Delivery'
-    },
-    // Add more sample orders as needed
-  ];
-  
-  const payments = [
-    {
-      id: 1,
-      mode: 'Credit Card',
-      amount: 50.99,
-      status: 'Completed',
-      date: '2024-02-24',
-      orderId: 101
-    },
-    {
-      id: 2,
-      mode: 'PayPal',
-      amount: 35.75,
-      status: 'Pending',
-      date: '2024-02-23',
-      orderId: 102
-    },
-    // Add more sample payments as needed
-  ];
+    useEffect(() => {
+      const fetchOrders = async () => {
+        try {
+          const response = await axios.get('http://localhost:5272/api/Customer/orders');
+          setOrders(response.data);
+          setOrderStatuses(response.data.map(order => ({ orderId: order.orderId, status: order.status })));
+
+        } catch (error) {
+          console.error('Error fetching orders:', error);
+      }
+    };
+    
+    fetchOrders();
+  }, []);
+
+  useEffect(() => {
+    const fetchPayments = async  () => {
+      try {
+        const response = await axios.get('http://localhost:5272/api/Customer/Payments');
+        setPaymnets(response.data);
+      } catch (error) {
+        console.error('Error getting payments:', error);
+      }
+    };
+
+    fetchPayments();
+  }, []);
+
+  const handleChangestatus = async (orderId, newStatus) => {
+    try {
+      await axios.put(`http://localhost:5272/api/Customer/${orderId}/status/${newStatus}`);
+      const updatedOrders = orders.map(order => {
+        if (order.orderId === orderId) {
+          return { ...order, status: newStatus };
+        }
+        return order;
+      });
+      setOrders(updatedOrders);
+      // Update the status for the selected order in orderStatuses
+      setOrderStatuses(prevStatuses => prevStatuses.map(status => {
+        if (status.orderId === orderId) {
+          return { ...status, status: newStatus };
+        }
+        return status;
+      }));
+    } catch (error) {
+      console.error('Error changing order status:', error);
+    }
+  };
 
 
   return (
@@ -90,13 +104,13 @@ const OwnerProfile = () => {
               </thead>
               <tbody>
                 {orders.map((order) => (
-                  <tr key={order.id}>
-                    <td>{order.id}</td>
-                    <td>{order.date}</td>
+                  <tr key={order.orderId}>
+                    <td>{order.orderId}</td>
+                    <td>{new Date(order.orderDate).toLocaleDateString()}</td>
                     <td>${order.amount.toFixed(2)}</td>
                     <td>{order.status}</td>
-                    <td>{order.customer}</td>
-                    <td>{order.deliveryPartner}</td>
+                    <td>{order.customer.name}</td>
+                    <td>{order.deliveryPartner.name}</td>
                   </tr>
                 ))}
               </tbody>
@@ -119,12 +133,12 @@ const OwnerProfile = () => {
               </thead>
               <tbody>
                 {payments.map((payment) => (
-                  <tr key={payment.id}>
-                    <td>{payment.id}</td>
-                    <td>{payment.mode}</td>
+                  <tr key={payment.paymentId}>
+                    <td>{payment.paymentId}</td>
+                    <td>{payment.paymentMode}</td>
                     <td>${payment.amount.toFixed(2)}</td>
                     <td>{payment.status}</td>
-                    <td>{payment.date}</td>
+                    <td>{new Date(payment.date).toLocaleDateString()}</td>
                     <td>{payment.orderId}</td>
                   </tr>
                 ))}
@@ -147,21 +161,23 @@ const OwnerProfile = () => {
                 </tr>
               </thead>
               <tbody>
-                {orders.map((order) => (
-                  <tr key={order.id}>
-                    <td>{order.id}</td>
-                    <td>{order.date}</td>
+                {orders.map((order, index) => (
+                  <tr key={order.orderId}>
+                    <td>{order.orderId}</td>
+                    <td>{new Date(order.orderDate).toLocaleDateString()}</td>
                     <td>${order.amount.toFixed(2)}</td>
                     <td>{order.status}</td>
-                    <td>{order.customer}</td>
+                    <td>{order.customer.name}</td>
                     <td>
-                      <select>
+                    <select value={orderStatuses[index].status} onChange={(e) => handleChangestatus(order.orderId, e.target.value)}>
                         <option value="pending">Pending</option>
                         <option value="processing">Processing</option>
                         <option value="completed">Completed</option>
                         <option value="cancelled">Cancelled</option>
                       </select>
-                      <button>   <i class='bx bx-edit'></i> Change Status</button>
+                      <button onClick={() => handleChangestatus(order.orderId, orderStatuses[index].status)}>
+                        <i className="bx bx-edit"></i> Change Status
+                      </button>
                     </td>
                   </tr>
                 ))}

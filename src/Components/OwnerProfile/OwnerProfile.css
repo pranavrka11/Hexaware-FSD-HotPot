@@ -88,6 +88,7 @@
   .orders-tab table{
     width: 100%;
     border-collapse: collapse;
+    border-color: blue;
   }
   
   .payments-tab th,
