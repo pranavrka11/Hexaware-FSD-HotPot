@@ -15,6 +15,9 @@ namespace HotPot.Services
         private readonly IRepository<int, string, Restaurant> _restaurantRepo;
         private readonly IRepository<int, string, City> _cityRepo;
         private readonly IRepository<int, string, State> _stateRepo;
+        private readonly IRepository<int, string, Order> _orderRepo;
+        private readonly IRepository<int, string, Payment> _paymentRepo;
+
 
         //private readonly IRepository<int, string, Cart> _cartRepo;
         //private readonly IRepository<int, string, CartItem> _cartItemRepo;
@@ -27,6 +30,8 @@ namespace HotPot.Services
                 IRepository<int, string, Restaurant> restaurantRepo,
                 IRepository<int, string, City> cityRepo,
                 IRepository<int, string, State> stateRepo,
+                IRepository<int, string, Order> orderRepo,
+                IRepository<int, string, Payment> paymentRepo,
                 //IRepository<int, string, Cart> cartRepo,
                 //IRepository<int, string, CartItem> cartItemRepo,
                 ILogger<CustomerUserService> logger)
@@ -37,6 +42,8 @@ namespace HotPot.Services
             _restaurantRepo = restaurantRepo;
             _cityRepo = cityRepo;
             _stateRepo = stateRepo;
+            _orderRepo = orderRepo;
+            _paymentRepo = paymentRepo;
             //_cartRepo = cartRepo;
             //_cartItemRepo = cartItemRepo;
             _logger = logger;
@@ -215,11 +222,79 @@ namespace HotPot.Services
             return filteredMenuItems;
         }
 
+        //Restaurant layer
+        public async Task<List<Restaurant>> ViewRestaurants()
+        {
+            try
+            {
+                var restaurants = await _restaurantRepo.GetAsync();
+                _logger.LogInformation("Retrieved list of restaurants successfully.");
+                return restaurants;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching list of restaurants.");
+                throw; 
+            }
+        }
 
         public void LogInformation(string message)
         {
             _logger.LogInformation(message);
         }
 
+        public async Task<List<Order>> ViewOrders()
+        {
+            try
+            {
+                var orders = await _orderRepo.GetAsync();
+                _logger.LogInformation("Retrieved list of orders successfully.");
+                return orders;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while fetching list of orders.");
+                throw;
+            }
+
+        }
+
+        public async Task<List<Payment>> ViewPayments()
+        {
+            try
+            {
+                var payments = await _paymentRepo.GetAsync();
+                _logger.LogInformation("Retrieved list of payments successfully.");
+                return payments;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occured while fetching list of payments.");
+                throw;
+
+            }
+        }
+
+        public async Task<Order> UpdateOrderStatus(int orderId, string newStatus)
+        {
+            try
+            {
+                var order = await _orderRepo.GetAsync(orderId);
+                if(order == null)
+                {
+                    throw new NoOrderFoundException();
+                }
+
+                order.Status = newStatus;
+                var updatedOrder = await _orderRepo.Update(order);
+                LogInformation($"Order status updated successfully. OrderId: {updatedOrder.OrderId}, New Status: {updatedOrder.Status}");
+                return updatedOrder;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while updating order status.");
+                throw;
+            }
+        }
     }
 }
