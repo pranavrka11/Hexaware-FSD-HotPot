@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using HotPot.Services;
 using HotPot.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Cors;
 
 namespace HotPot.Controllers
 {
+    [EnableCors("HotpotPolicy")]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
@@ -246,5 +248,69 @@ namespace HotPot.Controllers
             }
         }
 
+        //Restaurant Endpoints
+        [HttpGet("restaurants")]
+        public async Task<IActionResult> ViewRestaurants()
+        {
+            try
+            {
+                var restaurants = await _customerUserService.ViewRestaurants();
+                return Ok(restaurants);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error retrieving restaurants: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        //Order layer
+        [HttpGet("orders")]
+        public async Task<IActionResult> ViewOrders()
+        {
+            try
+            {
+                var orders = await _customerUserService.ViewOrders();
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error retrieving orders: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpGet("Payments")]
+        public async Task<IActionResult> ViewPayments()
+        {
+            try
+            {
+                var payments = await _customerUserService.ViewPayments();
+                return Ok(payments);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error retrieving payments: {ex.Message}");
+                return StatusCode(500, "Internal server error");
+            }
+        }
+
+        [HttpPut("{orderId}/status/{newStatus}")]
+        public async Task<IActionResult> UpdateOredrStatus(int orderId, string newStatus)
+        {
+            try
+            {
+                var updatedOrder = await _customerUserService.UpdateOrderStatus(orderId, newStatus);
+                return Ok(updatedOrder);
+            }
+            catch (NoOrderFoundException ex)
+            {
+                return NotFound(ex.Message);
+            }
+            catch
+            {
+                return StatusCode(500, "An error occurred while updating the order status.");
+            }
+        }
     }
 }
