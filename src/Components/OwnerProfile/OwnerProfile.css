@@ -88,7 +88,6 @@
   .orders-tab table{
     width: 100%;
     border-collapse: collapse;
-    border-color: blue;
   }
   
   .payments-tab th,
@@ -138,6 +137,51 @@
     margin-right: 5px;
   }
   
+.add-menu-tab form {
+  display: grid;
+  gap: 10px;
+}
+
+  .add-menu-tab form label {
+    font-weight: bold;
+    font-size:medium;
+    
+  }
+
+.add-menu-tab form input[type="text"],
+.add-menu-tab form input[type="number"],
+.add-menu-tab form textarea,
+.add-menu-tab form select {
+  width: 30%;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  
+}
+
+.add-menu-tab form select {
+  width: 30%;
+}
+
+.add-menu-tab form input[type="submit"] {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 10px 20px;
+  transition: background-color 0.3s;
+}
+
+.add-menu-tab form input[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
   
   /* Responsive Styles */
   @media (max-width: 768px) {

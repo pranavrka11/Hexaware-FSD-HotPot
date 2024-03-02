@@ -7,10 +7,77 @@ const OwnerProfile = () => {
   const [orders, setOrders] = useState([]);
   const [payments, setPaymnets] = useState([]);
   const [orderStatuses, setOrderStatuses] = useState([]);
+  const [newMenu, setNewMenu] = useState({
+    name: '',
+    type: 'Veg',
+    price: '',
+    description: '',
+    cuisine: 'Main Course',
+    cookingTime: '',
+    tasteInfo: '',
+    menuImage: '',
+    nutritionId: '',
+    restaurantId: '1', // Set restaurantId statically for now
+  });
+  const [menus, setMenus] = useState([]);
+  const [selectedMenuId, setSelectedMenuId] = useState('');
+  const [error, setError] = useState(null);
 
+
+  useEffect(() => {
+    const fetchMenus = async () => {
+      try {
+        const response = await axios.get('http://localhost:5272/api/Customer/menu');
+        setMenus(response.data);
+      } catch (error) {
+        console.error('Error fetching menus:', error);
+        setError('Error fetching menus. Please try again.');
+      }
+    };
+    fetchMenus();
+  }, []);
 
   const handleTabChange = (tab) => {
     setActiveTab(tab);
+  };
+
+  const handleMenuSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // Call API to add menu
+      const response = await axios.post('http://localhost:5272/api/Customer/menu/add', newMenu);
+      console.log('Menu added:', response.data);
+      // Reset form fields
+      setNewMenu({
+        name: '',
+        type: 'Veg',
+        price: '',
+        description: '',
+        cuisine: 'Main Course',
+        cookingTime: '',
+        tasteInfo: '',
+        menuImage: '',
+        nutritionId: '',
+        restaurantId: '123', // Set restaurantId statically for now
+      });
+      setError(null); // Clear any previous errors
+    } catch (error) {
+      console.error('Error adding menu:', error);
+      setError('Error adding menu. Please try again.'); // Set error message
+    }
+  };
+
+  const handleDeleteMenu = async () => {
+    try {
+      await axios.delete(`http://localhost:5272/api/Customer/menu/delete?id=${selectedMenuId}`);
+      // After successfully deleting the menu, remove it from the dropdown list
+      setMenus(menus.filter(menu => menu.menuId !== selectedMenuId));
+      setSelectedMenuId('');
+      setError(null); // Clear any previous errors
+    } catch (error) {
+      console.error('Error deleting menu:', error);
+      setError('Error deleting menu. Please try again.');
+    }
   };
 
     useEffect(() => {
@@ -85,6 +152,12 @@ const OwnerProfile = () => {
         >
           Change Order Status
         </button>
+        <button
+          className={activeTab === 'addMenu' ? 'active' : ''}
+          onClick={() => handleTabChange('addMenu')}
+        >
+          Add Menu
+        </button>
       </div>
 
       <div className="tab-content">
@@ -136,7 +209,7 @@ const OwnerProfile = () => {
                   <tr key={payment.paymentId}>
                     <td>{payment.paymentId}</td>
                     <td>{payment.paymentMode}</td>
-                    <td>${payment.amount.toFixed(2)}</td>
+                    <td>Rs. {payment.amount.toFixed(2)}</td>
                     <td>{payment.status}</td>
                     <td>{new Date(payment.date).toLocaleDateString()}</td>
                     <td>{payment.orderId}</td>
@@ -185,6 +258,110 @@ const OwnerProfile = () => {
             </table>
           </div>
         )}
+        {activeTab === 'addMenu' && (
+        <div className="add-menu-tab">
+          <h2>Add Menu</h2>
+          <form onSubmit={handleMenuSubmit}>
+          <div className="form-group">
+                <label>Name:</label>
+                <input
+                  type="text"
+                  value={newMenu.name}
+                  onChange={(e) => setNewMenu({ ...newMenu, name: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Type:</label>
+                <select
+                  value={newMenu.type}
+                  onChange={(e) => setNewMenu({ ...newMenu, type: e.target.value })}
+                >
+                  <option value="Veg">Veg</option>
+                  <option value="Non-Veg">Non-Veg</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Price:</label>
+                <input
+                  type="number"
+                  value={newMenu.price}
+                  onChange={(e) => setNewMenu({ ...newMenu, price: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="form-group">
+                <label>Description:</label>
+                <input
+                  type="text"
+                  value={newMenu.description}
+                  onChange={(e) => setNewMenu({ ...newMenu, description: e.target.value })}
+                />
+              </div>
+              <div className="form-group">
+                <label>Cuisine:</label>
+                <select
+                  value={newMenu.cuisine}
+                  onChange={(e) => setNewMenu({ ...newMenu, cuisine: e.target.value })}
+                >
+                  <option value="Main Course">Main Course</option>
+                  <option value="Break Fast">Break Fast</option>
+                  <option value="Icecream">Icecream</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Cooking Time:</label>
+                <input
+                  type="text"
+                  value={newMenu.cookingTime}
+                  onChange={(e) => setNewMenu({ ...newMenu, cookingTime: e.target.value })}
+                />
+              </div>
+              <div className="form-group">
+                <label>Taste Info:</label>
+                <input
+                  type="text"
+                  value={newMenu.tasteInfo}
+                  onChange={(e) => setNewMenu({ ...newMenu, tasteInfo: e.target.value })}
+                />
+              </div>
+              <div className="form-group">
+                <label>Menu Image:</label>
+                <input
+                  type="text"
+                  value={newMenu.menuImage}
+                  onChange={(e) => setNewMenu({ ...newMenu, menuImage: e.target.value })}
+                />
+              </div>
+              <div className="form-group">
+                <label>Nutrition ID:</label>
+                <input
+                  type="number"
+                  value={newMenu.nutritionId}
+                  onChange={(e) => setNewMenu({ ...newMenu, nutritionId: e.target.value })}
+                />
+              </div>
+             
+              {error && <div className="error">{error}</div>}
+              <button className='addMenu-button' type="submit">Add Menu</button>
+            </form>
+            
+            <div className="form-group">
+            <label>Select Menu to Delete:</label>
+            <select
+              value={selectedMenuId}
+              onChange={(e) => setSelectedMenuId(e.target.value)}
+            >
+              <option value="">Select Menu</option>
+              {menus.map(menu => (
+                <option key={menu.menuId} value={menu.menuId}>{menu.name}</option>
+              ))}
+            </select>
+          </div>
+          {error && <div className="error">{error}</div>}
+          <button className='delete-menu-button' onClick={handleDeleteMenu}>Delete Menu</button>
+        </div>
+      )}
       </div>
     </div>
   );

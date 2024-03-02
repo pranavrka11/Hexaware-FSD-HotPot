@@ -9,6 +9,7 @@ import MenuCategories from './Components/Menu/MenuCategories';
 import Menu from './Components/Menu/Menu';
 import Profile from './Components/Profile/Profile';
 import OwnerProfile from './Components/OwnerProfile/OwnerProfile';
+import Checkout from './Components/Checkout/Checkout';
 
 
 
@@ -32,6 +33,9 @@ function App() {
       {/* <Profile /> */}
 
       <OwnerProfile />
+
+      {/* <Checkout /> */}
+
     </div>
   );
 }
