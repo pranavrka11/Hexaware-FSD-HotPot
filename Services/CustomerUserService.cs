@@ -17,6 +17,8 @@ namespace HotPot.Services
         private readonly IRepository<int, string, State> _stateRepo;
         private readonly IRepository<int, string, Order> _orderRepo;
         private readonly IRepository<int, string, Payment> _paymentRepo;
+        private readonly IRepository<int, string, Cart> _cartRepo;
+        private readonly IRepository<(int, int), string, OrderItem> _orderItemRepo;
 
 
         //private readonly IRepository<int, string, Cart> _cartRepo;
@@ -32,6 +34,8 @@ namespace HotPot.Services
                 IRepository<int, string, State> stateRepo,
                 IRepository<int, string, Order> orderRepo,
                 IRepository<int, string, Payment> paymentRepo,
+                IRepository<int, string, Cart> cartRepo,
+                IRepository<(int, int) ,string, OrderItem> orderItemRepo,
                 //IRepository<int, string, Cart> cartRepo,
                 //IRepository<int, string, CartItem> cartItemRepo,
                 ILogger<CustomerUserService> logger)
@@ -44,6 +48,8 @@ namespace HotPot.Services
             _stateRepo = stateRepo;
             _orderRepo = orderRepo;
             _paymentRepo = paymentRepo;
+            _cartRepo = cartRepo;
+            _orderItemRepo = orderItemRepo;
             //_cartRepo = cartRepo;
             //_cartItemRepo = cartItemRepo;
             _logger = logger;
@@ -222,6 +228,44 @@ namespace HotPot.Services
             return filteredMenuItems;
         }
 
+        public async Task<Menu> AddMenu(Menu menu)
+        {
+            try
+            {
+                var addedMenu = await _menuRepo.Add(menu);
+                _logger.LogInformation($"Menu added successfully. MenuId: {addedMenu.MenuId}");
+                return addedMenu;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occured while adding the menu.");
+                throw;
+            }
+        }
+
+        public async Task<Menu> RemoveMenu(int menuId)
+        {
+            try{
+                var deletedMenu = await _menuRepo.Delete(menuId);
+                if (deletedMenu != null)
+                {
+                    _logger.LogInformation($"Menu deleted: {deletedMenu.MenuId}");
+                    return deletedMenu;
+                }
+                else
+                {
+                    _logger.LogWarning($"Menu with ID {menuId} not found.");
+                    return null;
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error removing menu with ID {menuId}: {ex.Message}");
+                return null;
+            }
+        }
+
+
         //Restaurant layer
         public async Task<List<Restaurant>> ViewRestaurants()
         {
@@ -293,6 +337,97 @@ namespace HotPot.Services
             catch (Exception ex)
             {
                 _logger.LogError(ex, "Error occurred while updating order status.");
+                throw;
+            }
+        }
+
+        public async Task<List<Order>> CreateOrdersFromCart(int customerId)
+        {
+            try
+            {
+                // Retrieve cart items for the given customer
+                var cartItems = await ViewCart(customerId);
+
+                // Group cart items by restaurant ID
+                var cartItemsByRestaurant = cartItems.GroupBy(item => item.RestaurantId);
+
+                var orders = new List<Order>();
+
+                // Create an order for each restaurant group
+                foreach (var group in cartItemsByRestaurant)
+                {
+                    // Create a new order for the restaurant
+                    var order = new Order
+                    {
+                        OrderDate = DateTime.Now,
+                        CustomerId = customerId,
+                        Status = "Pending", // Set initial status
+                        PartnerId = 1,
+                        RestaurantId = group.Key, // Restaurant ID from the group
+                                                  // You can add other restaurant details to the order if needed
+                                                  // Example: Restaurant = await _restaurantRepo.GetAsync(group.Key)
+                        OrderItems = new List<OrderItem>() // Initialize order items collection
+                    };
+
+                    float totalAmount = 0; // Initialize total amount for the order
+
+
+                    // Add order items for the current restaurant
+                    foreach (var cartItem in group)
+                    {
+                        var orderItem = new OrderItem
+                        {
+                            Quantity = cartItem.Quantity,
+                            SubTotalPrice = cartItem.Quantity * cartItem.Menu.Price,
+                            MenuId = cartItem.MenuItemId
+                        };
+
+                        order.OrderItems.Add(orderItem);
+
+                        // Calculate subtotal price and add to total amount
+                        totalAmount += orderItem.SubTotalPrice;
+                    }
+                    // Set the total amount for the order
+                    order.Amount = totalAmount;
+
+                    // Add the order to the list
+                    orders.Add(order);
+                }
+
+                // Save orders to the database
+                foreach (var order in orders)
+                {
+                    await _orderRepo.Add(order);
+                }
+
+                // Remove cart items from the database (assuming you have a method to remove cart items)
+                foreach (var cartItem in cartItems)
+                {
+                    await _cartRepo.Delete(cartItem.Id);
+                }
+
+                return orders;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while creating orders from cart for customer with ID {customerId}");
+                throw new NoOrderFoundException("Error occurred while creating orders from cart. Please try again later.", ex);
+            }
+        }
+
+
+        //cart layer
+        public async Task<List<Cart>> ViewCart(int customerId)
+        {
+            try
+            {
+                var carts = await _cartRepo.GetAsync();
+                var customerCarts = carts.Where(c => c.CustomerId == customerId).ToList();
+                return customerCarts;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while fetching cart for customer with ID {customerId}");
                 throw;
             }
         }
