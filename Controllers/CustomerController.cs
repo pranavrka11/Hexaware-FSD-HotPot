@@ -60,7 +60,7 @@ namespace HotPot.Controllers
             }
         }
 
-        [Authorize(Roles = "RestaurantOwner")]
+        //[Authorize(Roles = "RestaurantOwner")]
         [HttpGet("address/{customerId}")]
         public async Task<IActionResult> ViewCustomerAddressByCustomerId(int customerId)
         {
@@ -248,6 +248,43 @@ namespace HotPot.Controllers
             }
         }
 
+        [HttpPost("menu/add")]
+        public async Task<IActionResult> AddMenu(Menu menu)
+        {
+            try
+            {
+                var addedMenu = await _customerUserService.AddMenu(menu);
+                return Ok(addedMenu);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred while adding the menu.");
+                return StatusCode(500, "An error occurred while processing your request.");
+            }
+        }
+
+        [HttpDelete("menu/delete")]
+        public async Task<IActionResult> DeleteMenu(int id)
+        {
+            try
+            {
+                var deletedMenu = await _customerUserService.RemoveMenu(id);
+                if (deletedMenu != null)
+                {
+                    return Ok(deletedMenu); 
+                }
+                else
+                {
+                    return NotFound(); 
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Error deleting menu with ID {id}: {ex.Message}");
+                return StatusCode(500, "An error occurred while processing your request."); 
+            }
+        }
+
         //Restaurant Endpoints
         [HttpGet("restaurants")]
         public async Task<IActionResult> ViewRestaurants()
@@ -264,7 +301,7 @@ namespace HotPot.Controllers
             }
         }
 
-        //Order layer
+        //Order Endpoints
         [HttpGet("orders")]
         public async Task<IActionResult> ViewOrders()
         {
@@ -310,6 +347,42 @@ namespace HotPot.Controllers
             catch
             {
                 return StatusCode(500, "An error occurred while updating the order status.");
+            }
+        }
+
+        [HttpPost("create-orders/{customerId}")]
+        public async Task<IActionResult> CreateOrdersFromCart(int customerId)
+        {
+            try
+            {
+                var orders = await _customerUserService.CreateOrdersFromCart(customerId);
+                return Ok(orders);
+            }
+            catch (NoOrderFoundException ex)
+            {
+                _logger.LogError(ex, $"Error occurred while creating orders from cart for customer with ID {customerId}");
+                return StatusCode(500, "Error occurred while creating orders from cart. Please try again later.");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Unexpected error occurred while creating orders from cart for customer with ID {customerId}");
+                return StatusCode(500, "Unexpected error occurred. Please try again later.");
+            }
+        }
+
+        //Cart Endpoints
+        [HttpGet("cart/{customerId}")]
+        public async Task<IActionResult> ViewCart(int customerId)
+        {
+            try
+            {
+                var carts = await _customerUserService.ViewCart(customerId);
+                return Ok(carts);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, $"Error occurred while fetching cart for customer with ID {customerId}");
+                return StatusCode(500, "An error occurred while processing your request.");
             }
         }
     }
