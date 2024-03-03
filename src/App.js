@@ -11,6 +11,7 @@ import Profile from './Components/Profile/Profile';
 import OwnerProfile from './Components/OwnerProfile/OwnerProfile';
 import Checkout from './Components/Checkout/Checkout';
 import Confirmation from './Components/Confirmation/Confirmation';
+import Admin from './Components/Admin/Admin';
 
 
 
@@ -18,6 +19,8 @@ import Confirmation from './Components/Confirmation/Confirmation';
 function App() {
   return (
     <div className="App">
+      <Admin />
+      
       {/* <RegistrationHeader />
       <Registration />
       <RegistrationFooter /> */}
@@ -37,7 +40,7 @@ function App() {
 
       {/* <Checkout /> */}
 
-      <Confirmation />
+      {/* <Confirmation /> */}
     </div>
   );
 }
