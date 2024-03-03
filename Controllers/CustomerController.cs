@@ -317,6 +317,20 @@ namespace HotPot.Controllers
             }
         }
 
+        [HttpGet("orders/{customerId}")]
+        public async Task<ActionResult> GetOrderByCustomerId(int customerId)
+        {
+            try
+            {
+                var orders = await _customerUserService.GetOrderByCustomerId(customerId);
+                return Ok(orders);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"An error occurred: {ex.Message}");
+            }
+        }
+
         [HttpGet("Payments")]
         public async Task<IActionResult> ViewPayments()
         {
