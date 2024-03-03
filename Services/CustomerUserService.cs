@@ -287,6 +287,7 @@ namespace HotPot.Services
             _logger.LogInformation(message);
         }
 
+        //Order Layer
         public async Task<List<Order>> ViewOrders()
         {
             try
@@ -302,6 +303,13 @@ namespace HotPot.Services
             }
 
         }
+
+        public async Task<List<Order>> GetOrderByCustomerId(int customerId)
+        {
+            var orders = await _orderRepo.GetAsync();
+            return orders.Where(o => o.CustomerId == customerId).ToList();
+        }
+
 
         public async Task<List<Payment>> ViewPayments()
         {
