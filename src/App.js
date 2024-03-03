@@ -10,6 +10,7 @@ import Menu from './Components/Menu/Menu';
 import Profile from './Components/Profile/Profile';
 import OwnerProfile from './Components/OwnerProfile/OwnerProfile';
 import Checkout from './Components/Checkout/Checkout';
+import Confirmation from './Components/Confirmation/Confirmation';
 
 
 
@@ -32,10 +33,11 @@ function App() {
 
       {/* <Profile /> */}
 
-      <OwnerProfile />
+      {/* <OwnerProfile /> */}
 
       {/* <Checkout /> */}
 
+      <Confirmation />
     </div>
   );
 }
