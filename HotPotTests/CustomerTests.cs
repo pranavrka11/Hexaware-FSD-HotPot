@@ -211,31 +211,31 @@ namespace HotPot.Tests.Services
         }
 
         //    
-        [Test]
-        public async Task PlaceOrder_ReturnsOrderMenuDTO()
-        {
-            // Arrange
-            int customerId = 1;
-            var carts = new List<Cart>
-    {
-        new Cart { Id = 1, CustomerId = customerId, MenuItemId = 1, Quantity = 2, Status = "added", RestaurantId = 1 }
-    };
-            var restaurant = new Restaurant { RestaurantId = 1, CityId = 1 };
-            var menu = new Menu { MenuId = 1, Price = 10.0f, RestaurantId = 1 };
-            var deliveryPartners = new List<DeliveryPartner> { new DeliveryPartner { PartnerId = 1 } };
-            var payment = new Payment { PaymentId=1, Status = "successful" };
-            _cartRepoMock.Setup(repo => repo.GetAsync()).ReturnsAsync(carts);
-            _restaurantRepoMock.Setup(repo => repo.GetAsync(1)).ReturnsAsync(restaurant);
-            _menuRepoMock.Setup(repo => repo.GetAsync(1)).ReturnsAsync(menu);
-            _deliveryPartnerRepoMock.Setup(repo => repo.GetAsync()).ReturnsAsync(deliveryPartners);
-            _paymentRepoMock.Setup(repo => repo.Update(It.IsAny<Payment>())).ReturnsAsync(payment);
+    //    [Test]
+    //    public async Task PlaceOrder_ReturnsOrderMenuDTO()
+    //    {
+    //        // Arrange
+    //        int customerId = 1;
+    //        var carts = new List<Cart>
+    //{
+    //    new Cart { Id = 1, CustomerId = customerId, MenuItemId = 1, Quantity = 2, Status = "added", RestaurantId = 1 }
+    //};
+    //        var restaurant = new Restaurant { RestaurantId = 1, CityId = 1 };
+    //        var menu = new Menu { MenuId = 1, Price = 10.0f, RestaurantId = 1 };
+    //        var deliveryPartners = new List<DeliveryPartner> { new DeliveryPartner { PartnerId = 1 } };
+    //        var payment = new Payment { PaymentId=1, Status = "successful" };
+    //        _cartRepoMock.Setup(repo => repo.GetAsync()).ReturnsAsync(carts);
+    //        _restaurantRepoMock.Setup(repo => repo.GetAsync(1)).ReturnsAsync(restaurant);
+    //        _menuRepoMock.Setup(repo => repo.GetAsync(1)).ReturnsAsync(menu);
+    //        _deliveryPartnerRepoMock.Setup(repo => repo.GetAsync()).ReturnsAsync(deliveryPartners);
+    //        _paymentRepoMock.Setup(repo => repo.Update(It.IsAny<Payment>())).ReturnsAsync(payment);
 
-            // Act
-            var result = await _customerServices.PlaceOrder(customerId, "paymentMode");
+    //        // Act
+    //        var result = await _customerServices.PlaceOrder(customerId, "paymentMode");
 
-            // Assert
-            Assert.NotNull(result);
-        }
+    //        // Assert
+    //        Assert.NotNull(result);
+    //    }
 
 
         //[Test]

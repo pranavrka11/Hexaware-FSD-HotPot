@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("HotPot")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2b21b206eddb3b6db3381112d875f14d793f3627")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b6de9422de807430914ee0ae6c4e465f391326b1")]
 [assembly: System.Reflection.AssemblyProductAttribute("HotPot")]
 [assembly: System.Reflection.AssemblyTitleAttribute("HotPot")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

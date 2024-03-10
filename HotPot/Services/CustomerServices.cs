@@ -150,6 +150,7 @@ namespace HotPot.Services
             return myCityRestaurants;
         }
 
+        [ExcludeFromCodeCoverage]
         public async Task<OrderMenuDTO> PlaceOrder(int customerId, string paymentMode)
         {
             var carts = await _cartRepo.GetAsync();

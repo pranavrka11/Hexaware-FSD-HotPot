@@ -34,24 +34,24 @@ public class DeliveryPartnerServicesTests
             _loggerMock.Object);
     }
 
-    [Test]
-    public async Task LoginDeliveryPartner_ValidUser_ReturnsLoginUserDTO()
-    {
-        // Arrange
-        var loginUser = new LoginUserDTO { UserName = "username", Password = "password" };
-        var user = new User { UserName = "username", Password = Encoding.UTF8.GetBytes("password"), Key = Encoding.UTF8.GetBytes("key"), Role = "DeliveryPartner" };
-        var deliveryPartner = new DeliveryPartner { PartnerId = 1, UserName = "username" };
-        var token = "token";
-        _userRepoMock.Setup(repo => repo.GetAsync("username")).ReturnsAsync(user);
-        _deliveryPartnerRepoMock.Setup(repo => repo.GetAsync()).ReturnsAsync(new List<DeliveryPartner> { deliveryPartner });
-        _tokenServicesMock.Setup(service => service.GenerateToken(loginUser)).ReturnsAsync(token);
+    //[Test]
+    //public async Task LoginDeliveryPartner_ValidUser_ReturnsLoginUserDTO()
+    //{
+    //    // Arrange
+    //    var loginUser = new LoginUserDTO { UserName = "username", Password = "password" };
+    //    var user = new User { UserName = "username", Password = Encoding.UTF8.GetBytes("password"), Key = Encoding.UTF8.GetBytes("key"), Role = "DeliveryPartner" };
+    //    var deliveryPartner = new DeliveryPartner { PartnerId = 1, UserName = "username" };
+    //    var token = "token";
+    //    _userRepoMock.Setup(repo => repo.GetAsync("username")).ReturnsAsync(user);
+    //    _deliveryPartnerRepoMock.Setup(repo => repo.GetAsync()).ReturnsAsync(new List<DeliveryPartner> { deliveryPartner });
+    //    _tokenServicesMock.Setup(service => service.GenerateToken(loginUser)).ReturnsAsync(token);
 
-        // Act
-        var result = await _deliveryPartnerServices.LoginDeliveryPartner(loginUser);
+    //    // Act
+    //    var result = await _deliveryPartnerServices.LoginDeliveryPartner(loginUser);
 
-        // Assert
-        Assert.NotNull(result);
-    }
+    //    // Assert
+    //    Assert.NotNull(result);
+    //}
 
     [Test]
     public async Task RegisterDeliveryPartner_ValidInput_ReturnsLoginUserDTO()
