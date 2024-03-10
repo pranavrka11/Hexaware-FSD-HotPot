@@ -148,3 +148,4 @@ D:\Mavericks\RoleBased Training(FSD)\HotPotSolution\HotPotTests\obj\Debug\net6.0
 D:\Mavericks\RoleBased Training(FSD)\HotPotSolution\HotPotTests\obj\Debug\net6.0\ref\HotPotTests.dll
 D:\Mavericks\RoleBased Training(FSD)\HotPotSolution\HotPotTests\bin\Debug\net6.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
 D:\Mavericks\RoleBased Training(FSD)\HotPotSolution\HotPotTests\bin\Debug\net6.0\Microsoft.IdentityModel.Abstractions.dll
+D:\Mavericks\RoleBased Training(FSD)\HotPotSolution\HotPotTests\obj\Debug\net6.0\HotPotTests.sourcelink.json

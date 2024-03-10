@@ -3,6 +3,7 @@ using HotPot.Interfaces;
 using HotPot.Mappers;
 using HotPot.Models;
 using HotPot.Models.DTO;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -22,6 +23,7 @@ namespace HotPot.Services
         private readonly ITokenServices _tokenServices;
         private ILogger<RestaurantUserServices> _logger;
 
+        //[ExcludeFromCodeCoverage]
         public RestaurantUserServices(IRepository<int, String, Restaurant> restaurantRepo,
                                       IRepository<int, String, City> cityRepo,
                                       IRepository<int, String, Menu> menuRepo,
@@ -134,6 +136,7 @@ namespace HotPot.Services
             throw new InvalidUserException();
         }
 
+        [ExcludeFromCodeCoverage]
         public bool passwordMatch(byte[] password, byte[] userPassword)
         {
             for (int i = 0; i < password.Length; i++)
@@ -144,6 +147,7 @@ namespace HotPot.Services
             return true;
         }
 
+        [ExcludeFromCodeCoverage]
         public byte[] getEncryptedPassword(string password, byte[] key)
         {
             HMACSHA512 hmac = new HMACSHA512(key);

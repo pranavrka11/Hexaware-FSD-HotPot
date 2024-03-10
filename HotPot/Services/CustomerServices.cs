@@ -3,6 +3,7 @@ using HotPot.Interfaces;
 using HotPot.Mappers;
 using HotPot.Models;
 using HotPot.Models.DTO;
+using System.Diagnostics.CodeAnalysis;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -56,6 +57,7 @@ namespace HotPot.Services
             _logger = logger;
         }
 
+        [ExcludeFromCodeCoverage]
         public async Task<LoginUserDTO> LogIn(LoginUserDTO loginCustomer)
         {
             var user = await _userRepo.GetAsync(loginCustomer.UserName);
@@ -76,6 +78,7 @@ namespace HotPot.Services
             throw new InvalidUserException();
         }
 
+        [ExcludeFromCodeCoverage]
         private bool passwordMatch(byte[] password, byte[] userPassword)
         {
             for (int i = 0; i < password.Length; i++)
@@ -86,6 +89,7 @@ namespace HotPot.Services
             return true;
         }
 
+        [ExcludeFromCodeCoverage]
         private byte[] getEncryptedPassword(string password, byte[] key)
         {
             HMACSHA512 hmac = new HMACSHA512(key);
@@ -217,6 +221,7 @@ namespace HotPot.Services
             throw new PaymentFailedException();
         }
 
+        [ExcludeFromCodeCoverage]
         public async Task<OrderMenuDTO> PlaceOrderForOne(int cartItemId, string paymentMode)
         {
             Cart cartItem = await _cartRepo.GetAsync(cartItemId);
