@@ -1,0 +1,197 @@
+.profile-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  font-family: 'Urbanist', sans-serif;
+  background-image: url('../../../public/OwnerProfile.jpg'); /* Replace 'path/to/your/image.jpg' with the actual path to your image */
+  background-size: cover; /* Cover the entire container */
+  background-position: center; /* Center the background image */
+  background-repeat: no-repeat; /* Do not repeat the background image */
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.tabs button {
+  flex: 1;
+  background-color: transparent;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: border-color 0.3s ease;
+  font-size: 18px;
+  font-weight: bold;
+  color: #555;
+}
+
+.tabs button:hover {
+  border-bottom-color: #7f9ead;
+}
+
+.tabs button.active {
+  border-bottom-color: #7f9ead;
+  color: #7f9ead;
+}
+
+.tab-content {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  transition: opacity 0.3s ease;
+}
+.tab-content.fade-in {
+  opacity: 1;
+}
+
+.orders-tab,
+.payments-tab,
+.change-status-tab {
+  padding: 20px;
+}
+
+.orders-tab h2,
+.payments-tab h2,
+.change-status-tab h2 {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.orders-tab ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.orders-tab li {
+  background-color: #fff;
+  padding: 10px 20px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.orders-tab table,
+.payments-tab table {
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.payments-tab table,
+.change-status-tab table ,
+.orders-tab table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.payments-tab th,
+.orders-tab th,
+.change-status-tab th,
+.orders-tab td,
+.change-status-tab td,
+.payments-tab td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+  font-size: medium;
+
+}
+
+
+
+.orders-tab td,
+.change-status-tab td ,
+.payments-tab td{
+  color: #fff;
+}
+.change-status-tab select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.change-status-tab button {
+  background-color: #7f9ead;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.change-status-tab button:hover {
+  background-color: #5a7b93;
+}
+.change-status-tab button i {
+  margin-right: 5px;
+}
+
+.add-menu-tab form {
+display: grid;
+gap: 10px;
+}
+
+.add-menu-tab form label {
+  font-weight: bold;
+  font-size:medium;
+  
+}
+
+.add-menu-tab form input[type="text"],
+.add-menu-tab form input[type="number"],
+.add-menu-tab form textarea,
+.add-menu-tab form select {
+width: 30%;
+padding: 8px;
+border: 1px solid #ccc;
+border-radius: 4px;
+box-sizing: border-box;
+
+}
+
+.add-menu-tab form select {
+width: 30%;
+}
+
+.add-menu-tab form input[type="submit"] {
+background-color: #4caf50;
+color: white;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+padding: 10px 20px;
+transition: background-color 0.3s;
+}
+
+.add-menu-tab form input[type="submit"]:hover {
+background-color: #45a049;
+}
+
+.error-message {
+color: red;
+margin-top: 10px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .tabs button {
+    flex: 0 0 100%;
+  }
+}
+
+@media (max-width: 576px) {
+  .profile-container {
+    padding: 10px;
+  }
+}

@@ -1,0 +1,170 @@
+.btn{
+    border-color: aliceblue;
+    color: aliceblue;
+}
+
+.restaurants-home-page{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn{
+    position: relative;
+}
+
+@media screen and (min-width:770px) {
+/* .card-res{
+    margin: 0.5rem;
+    width: (100%/3);
+    flex: 0 0 auto; 
+    margin-right: 10px; 
+    width: 300px;
+}
+
+.cards-wrapper-res{
+    display: flex;
+    flex-wrap: nowrap; 
+    overflow-x: auto;
+    margin-bottom: 20px;
+} */
+
+.cuisine-carousel{
+    display: flex;
+}
+
+.carousel-item-cuisine{
+    margin-right: 0;
+    display: block;
+    flex: 0 0 calc(100%/3);
+}
+}
+
+.cuisine-carousel{
+    padding: 1em;
+}
+
+.cuisine-card{
+    margin: 0.5em;
+}
+
+@media screen and (max-width:769px){
+    .card-res:not(:first-child)
+    {
+        display: none;
+    }
+} */
+.navbar .navbar-nav .nav-link{
+    color: #2B2B2B;
+    font-size: 1.1em;
+    padding: 1.2em;
+    border-radius: 10px;
+}
+
+.navbar{
+    margin: 30px;
+    border-radius: 15px;
+}
+
+.navbar .navbar-nav .nav-link.active{
+    background-color: #F6D117;
+    color: #2B2B2B;
+    border-radius: 10px;
+}
+
+@media screen and (min-width:992px) {
+    .navbar{
+        padding: 0;
+    }
+}
+
+@media screen and (max-width:991px) {
+    .navbar-nav{
+        padding-top: 0.5em;
+    }
+
+    .nav-link{
+        padding-left: 05em;
+    }
+}
+
+.login-button{
+    background-color: #F6D117;
+    color: #2B2B2B;
+    font-size: 18px;
+    padding: 8px 20px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+    border-radius: 15px;
+    margin: 10px;
+    font-weight:400;
+
+
+}
+
+.login-button:hover{
+    background-color: #E1C01B;
+    color: #2B2B2B;
+}
+
+
+.navbar .navbar-nav .nav-link:hover{
+    background-color: #F6D117;
+    color: #2B2B2B;
+    border-radius: 10px;
+}
+
+.navbar-brand{
+    font-family: 'Urbanist', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.navbar-brand:hover{
+    color: #E1C01B;
+}
+
+.cards-wrapper-res{
+    display: flex;
+    flex-wrap: nowrap; /* Prevent cards from wrapping to the next line */
+    overflow-x: auto; /* Enable horizontal scrolling for overflow */
+    margin-bottom: 20px;
+}
+
+.card-res{
+    flex: 0 0 auto; /* Prevent cards from growing or shrinking */
+    margin-right: 10px; /* Optional: Add spacing between the cards */
+    width: 90%;
+}
+
+.restaurant-cards{
+    /* display: flex; */
+    /* flex-wrap: wrap; */
+}
+
+.carousel-controls {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.control-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin: 0 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.page-head{
+    margin-top: 10px;
+    text-align: center;
+}
+
+.resto-category-label{
+    margin: 0;
+}
+
+.rating-display{
+    margin-top: 10px;
+}

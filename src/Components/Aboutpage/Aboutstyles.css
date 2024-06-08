@@ -1,0 +1,374 @@
+
+*/ 
+
+
+.navbar .navbar-nav .nav-link{
+    color: #2B2B2B;
+    font-size: 1.1em;
+    padding: 1.5em;
+    border-radius: 10px;
+}
+
+.navbar{
+    margin: 30px;
+    border-radius: 15px;
+}
+
+.navbar .navbar-nav .nav-link.active{
+    background-color: #F6D117;
+    color: #2B2B2B;
+    border-radius: 10px;
+}
+
+@media screen and (min-width:992px) {
+    .navbar{
+        padding: 0;
+    }
+}
+
+@media screen and (max-width:991px) {
+    .navbar-nav{
+        padding-top: 0.5em;
+    }
+
+    .nav-link{
+        padding-left: 05em;
+    }
+}
+
+.login-button{
+    background-color: #F6D117;
+    color: #2B2B2B;
+    font-size: 18px;
+    padding: 8px 20px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+    border-radius: 15px;
+    margin: 10px;
+    font-weight:400;
+
+
+}
+
+.login-button:hover{
+    background-color: #E1C01B;
+    color: #2B2B2B;
+}
+
+
+.navbar .navbar-nav .nav-link:hover{
+    background-color: #F6D117;
+    color: #2B2B2B;
+    border-radius: 10px;
+}
+
+.navbar-brand{
+    font-family: 'Urbanist', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.navbar-brand:hover{
+    color: #E1C01B;
+}
+
+
+/* Image */
+.carousel-content{
+    position: absolute;
+    bottom: 40%;
+    left: 40%;
+    z-index: 20;
+    color: white;
+}
+
+.carousel-content h1{
+    font-size: 70px;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+/* CSS for main body */
+
+/* CSS for story section */
+.story-container{
+    margin-top: 20px;
+}
+
+.story-title{
+    text-align: left;
+}
+
+.story-main{
+    display: flex;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.story-image{
+    float: left;
+}
+
+.story-image img{
+    border-radius: 15px;
+}
+
+.story-content{
+    float: right;
+    margin-left: 100px;
+    background-color: #FFFFED;
+    border: 1px #FFFFED;
+    border-radius: 30px;
+    padding: 30px;
+}
+
+.story-content p{
+    padding: 10px;
+}
+
+@media screen and (max-width:1199px) {
+    .story-main{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .story-image img{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .story-image{
+        width: 100%;
+        margin: 10px;
+    }
+
+    .story-content{
+        margin: 20px;
+        justify-content: center;
+        text-align: center;
+    }
+
+    .story-title{
+        text-align: center;
+        margin-bottom: 0;
+    }
+}
+
+/* CSS for vision section */
+.vision-main{
+    display: flex;
+    flex-direction: row-reverse;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.vision-image img{
+    border-radius: 15px;
+}
+
+.vision-content{
+    background-color: #DDFFBB;
+    border: 1px #DDFFBB;
+    border-radius: 30px;
+    padding: 30px;
+    margin-right: 100px;
+}
+
+.vision-title{
+    text-align: right;
+}
+
+.vision-content p{
+    padding: 10px;
+}
+
+@media screen and (max-width:1199px){
+    .vision-main{
+        flex-direction: column;
+        justify-content: center;
+    }
+
+    .vision-image{
+        width: 100%;
+        margin: 10px;
+    }
+
+    .vision-image img{
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        width: 50%;
+    }
+
+    .vision-content{
+        justify-content: center;
+        text-align: center;
+        margin: 20px;
+    }
+
+    .vision-title{
+        text-align: center;
+    }
+}
+
+/* CSS for footer */
+.myfooter{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #111;
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.footer-brand{
+    margin-top: 50px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-brand a{
+    color: white;
+    text-decoration: none;
+    transition: 0.5s;
+    opacity: 0.8;
+}
+
+.footer-brand a:hover{
+    opacity: 1.1;
+}
+
+.footer-container{
+    padding: 30px 30px 20px;
+}
+
+.social-icons{
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons a{
+    background-color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 50px;
+}
+
+.social-icons i{
+    font-size: 2em;
+    color: black;
+    opacity: 0.9;
+}
+
+.social-icons a:hover{
+    background-color: #111;
+    transition: 0.5s;
+}
+
+.social-icons a:hover i{
+    color: aliceblue;
+    transition: 0.5s;
+}
+
+.footer-nav{
+    margin: 30px 0;
+}
+
+.footer-nav ul{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.footer-nav ul a{
+    color: white;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.3em;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footer-nav ul a:hover{
+    opacity: 1;
+}
+
+.footer-copyright{
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-copyright p{
+    color: white;
+}
+
+@media screen and (max-width:769px) {
+    .footer-nav ul{
+        flex-direction: column;
+    }
+
+    .footer-nav ul li{
+        width: 100%;
+        text-align: center;
+        margin: 10px;
+    }
+}
+
+
+/* sample */
+
+.btn{
+    border-color: aliceblue;
+    color: aliceblue;
+}
+
+.restaurants-home-page{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.btn{
+    position: relative;
+}
+
+@media screen and (min-width:770px) {
+.card-res{
+    margin: 0.5rem;
+    width: (100%/3);
+}
+
+.cards-wrapper-res{
+    display: flex;
+}
+
+.cuisine-carousel{
+    display: flex;
+}
+
+.carousel-item-cuisine{
+    margin-right: 0;
+    display: block;
+    flex: 0 0 calc(100%/3);
+}
+}
+
+.cuisine-carousel{
+    padding: 1em;
+}
+
+.cuisine-card{
+    margin: 0.5em;
+}
+
+@media screen and (max-width:769px){
+    .card-res:not(:first-child)
+    {
+        display: none;
+    }
+}

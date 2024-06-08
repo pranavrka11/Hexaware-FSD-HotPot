@@ -1,0 +1,190 @@
+.page-container {
+  height: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Urbanist', sans-serif;
+  background: #7f9ead;
+  padding: 20px;
+}
+
+.cards-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: -20px;
+  /* Counteract margin-bottom of last card */
+  justify-content: space-between;
+
+}
+
+.first-card {
+  width: 400px;
+  margin-right: 30px;
+  margin-bottom: 40px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  background: #fff;
+  padding: 30px 50px;
+  height: auto;
+  overflow: auto;
+  justify-content: center;
+  text-align: center;
+}
+
+.edit-button {
+  color: #fff;
+  background-color: #000;
+  border-radius: 5px;
+  cursor: pointer;
+  /* Change cursor to pointer on hover */
+
+
+}
+
+.edit-button:hover {
+  opacity: 0.7;
+}
+
+.horizontal-card {
+  width: 100%;
+  max-width: 500px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  background: #fff;
+  padding: 30px 50px;
+  height: auto;
+}
+
+
+/* .card:hover {
+  height: 400px;
+} */
+
+.imgbox {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+img {
+  width: 100%;
+  border-radius: 10px;
+  box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.5);
+}
+
+.content {
+  padding: 10px 20px;
+  text-align: center;
+  position: inherit;
+  /* transform: translateY(-450px);
+  opacity: 0; */
+  /* transition: opacity 0.3s, transform 0.3s; Transition opacity and transform */
+}
+
+/* .card:hover > .content {
+  opacity: 1;
+  transform: translateY(-160px);
+} */
+
+.content h2 {
+  color: #7f9ead;
+}
+
+@media (max-width: 768px) {
+  .cards-container {
+    flex-direction: column;
+    /* Stack cards vertically on smaller screens */
+    align-items: stretch;
+    /* Stretch cards to fill the container width */
+  }
+
+  .first-card {
+    margin-right: 0;
+    /* Remove margin between cards */
+    margin-bottom: 20px;
+    /* Add margin between cards */
+  }
+}
+
+
+
+.first-text {
+  width: 200px;
+  height: 40px;
+}
+
+.detail-field {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px
+}
+.detail-field label {
+  flex: 0 0 90px; /* Set a fixed width for the label */
+  /*margin-right: 10px;  Add some space between label and input */
+}
+
+.order-hostory {
+  text-align: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+.order-card{
+  margin: 0 auto;
+  width: 80%;
+  margin-top: 15px;
+}
+
+.history-title{
+  background-color: aliceblue;
+  padding: 10px;
+  text-align: center;
+}
+
+.order-menu{
+  margin-top: 30px;
+  font-weight: 500;
+}
+
+.status-text{
+  font-weight: 600;
+  padding: 1px;
+}
+
+.order-price{
+  margin-top: 30px;
+  font-weight: 500;
+}
+
+.order-status-delivered{
+  background-color: #68BA00;
+  border-radius: 15px;
+}
+
+.order-status-undelivered{
+  background-color: #DAD719;
+  border-radius: 15px;
+}
+
+.order-status-cancelled{
+  background-color: #FF7530;
+  border-radius: 15px;
+}
+
+.cancel-button{
+  margin-top: 10px;
+}
+
+.cancel-order-modal{
+  text-align: center;
+}
+
+.modal-title{
+  text-align: center;
+}

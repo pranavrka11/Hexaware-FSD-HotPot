@@ -1,0 +1,221 @@
+*/
+
+
+.navbar .navbar-nav .nav-link{
+    color: #2B2B2B;
+    font-size: 1.1em;
+    padding: 1.5em;
+    border-radius: 10px;
+}
+
+.navbar{
+    margin: 30px;
+    border-radius: 15px;
+}
+
+.navbar .navbar-nav .nav-link.active{
+    background-color: #F6D117;
+    color: #2B2B2B;
+    border-radius: 10px;
+}
+
+@media screen and (min-width:992px) {
+    .navbar{
+        padding: 0;
+    }
+}
+
+@media screen and (max-width:991px) {
+    .navbar-nav{
+        padding-top: 0.5em;
+    }
+
+    .nav-link{
+        padding-left: 05em;
+    }
+}
+
+.login-button{
+    background-color: #F6D117;
+    color: #2B2B2B;
+    font-size: 18px;
+    padding: 8px 20px;
+    text-decoration: none;
+    transition: 0.3s background-color;
+    border-radius: 15px;
+    margin: 10px;
+    font-weight:400;
+
+
+}
+
+.login-button:hover{
+    background-color: #E1C01B;
+    color: #2B2B2B;
+}
+
+
+.navbar .navbar-nav .nav-link:hover{
+    background-color: #F6D117;
+    color: #2B2B2B;
+    border-radius: 10px;
+}
+
+.navbar-brand{
+    font-family: 'Urbanist', sans-serif;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.navbar-brand:hover{
+    color: #E1C01B;
+}
+
+/* CSS for restaurants cards */
+.restaurant-cards{
+    margin-top: 150px;
+}
+
+.cards-display{
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.cards-title{
+    text-align: center;
+}
+
+/* CSS for footer */
+.myfooter{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    background-color: #111;
+    width: 100vw;
+    position: absolute;
+    left: 0;
+    right: 0;
+}
+
+.footer-brand{
+    margin-top: 50px;
+    margin-bottom: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.footer-brand a{
+    color: white;
+    text-decoration: none;
+    transition: 0.5s;
+    opacity: 0.7;
+}
+
+.footer-brand a:hover{
+    opacity: 1.1;
+}
+
+.footer-container{
+    padding: 30px 30px 20px;
+}
+
+.social-icons{
+    display: flex;
+    justify-content: center;
+}
+
+.social-icons a{
+    background-color: white;
+    text-decoration: none;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 50px;
+}
+
+.social-icons i{
+    font-size: 2em;
+    color: black;
+    opacity: 0.9;
+}
+
+.social-icons a:hover{
+    background-color: #111;
+    transition: 0.5s;
+}
+
+.social-icons a:hover i{
+    color: aliceblue;
+    transition: 0.5s;
+}
+
+.footer-nav{
+    margin: 30px 0;
+}
+
+.footer-nav ul{
+    display: flex;
+    justify-content: center;
+    list-style: none;
+}
+
+.footer-nav ul a{
+    color: white;
+    margin: 20px;
+    text-decoration: none;
+    font-size: 1.3em;
+    opacity: 0.7;
+    transition: 0.5s;
+}
+
+.footer-nav ul a:hover{
+    opacity: 1;
+}
+
+.footer-copyright{
+    background-color: #000;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-copyright p{
+    color: white;
+}
+
+@media screen and (max-width:769px) {
+    .footer-nav ul{
+        flex-direction: column;
+    }
+
+    .footer-nav ul li{
+        width: 100%;
+        text-align: center;
+        margin: 10px;
+    }
+}
+
+.controller-content{
+    background-color: #BABABA;
+    padding: 10px;
+    border-radius: 15px;
+}
+
+.not-found{
+    text-align: center;
+}
+
+.select-cuisine{
+    margin-left: 5px;
+    border-radius: 10px;
+}
+
+.cuisine-filter{
+    display: flex;
+}
+
+.resto-category-label{
+    margin: 0;
+}
+
+.rating-display{
+    margin-top: 10px;
+}

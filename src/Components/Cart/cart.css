@@ -1,0 +1,17 @@
+.empty-cart{
+    text-align: center;
+}
+
+.cart-item-card{
+    background-color: antiquewhite;
+    margin-bottom: 20px;
+}
+
+.card-inside{
+    padding: 50px;
+}
+
+.container-1{
+    margin-left: 50px;
+    margin-right: 50px;
+}

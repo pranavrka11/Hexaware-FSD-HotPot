@@ -1,0 +1,45 @@
+.contact-us-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: url('../../../public/Contact.jpg'); 
+    height: 100vh;
+    padding-left: 100px;
+    justify-content: center;
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+  }
+  
+  .contact-heading {
+    color: #333;
+  }
+  
+  .contact-info {
+    width: 50%;
+    max-width: 600px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .info-item {
+    margin-bottom: 20px;
+    font-size: 16px;
+    color: #333;
+  }
+  
+  .social-icons {
+    margin-top: 20px;
+  }
+  
+  .social-icon-link {
+    color: #fff;
+    font-size: 24px;
+    margin-right: 10px;
+  }
+  
+  .social-icon-link:hover {
+    color: gold;
+  }

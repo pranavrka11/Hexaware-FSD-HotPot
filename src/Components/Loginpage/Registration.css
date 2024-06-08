@@ -1,0 +1,112 @@
+/* Registration.css */
+.user-container {
+    min-height: 80vh;
+    display: flex;
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .grid-two--column {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .form-text {
+    height: inherit;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url("../../../public/register\ back.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    padding: 3rem 2rem;
+  }
+  
+  .form-text p {
+    width: 23ch;
+    text-align: center;
+    margin: 2rem 0 2rem 0;
+  }
+  
+  .form-text button {
+    color: #000;
+    background-color: #fff;
+  }
+  
+  .form-text button:hover {
+    background-color: transparent;
+    color: #fff;
+  }
+  
+  .registration-form,
+  .login-form {
+    width: 100%;
+    min-height: 55vh;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .registration-form p,
+  .login-form p {
+    margin: 1rem 0 .7rem 0;
+  }
+  
+  input {
+    width: 20rem;
+    margin: .3rem 0;
+    border: none;
+    background-color: #e8e8e8;
+    padding: 1rem 1.8rem;
+    letter-spacing: .06rem;
+  }
+  
+  input[type="submit"] {
+    margin-top: 1rem;
+    min-width: 10rem;
+    background-color: var(--var-primary-color);
+    color: #fff;
+  }
+  
+  /* Registration.css */
+@media screen and (max-width: 769px) {
+    .grid-two--column {
+      grid-template-columns: 1fr; /* Change to single column layout */
+    }
+  
+    .registration-header .container {
+      flex-direction: column;
+      gap: 1rem;
+    }
+  
+    .registration-header .container .logo {
+      padding-top: 2rem;
+    }
+  
+    .registration,
+    .login {
+      min-width: 90vw;
+    }
+  
+    .form-text {
+      order: 1;
+    }
+  
+    .registration,
+    .login {
+      order: 0;
+    }
+  
+    .form-text p {
+      width: 23ch;
+    }
+  }
+
+
+  
